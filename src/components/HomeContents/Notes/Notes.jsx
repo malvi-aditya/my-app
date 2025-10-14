@@ -1,22 +1,19 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { useState } from "react";
+import { styled } from "@mui/material/styles";
 import JSNotes from "./JSNotes";
 import ReactNotes from "./ReactNotes";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CSSNotes from "./CSSNotes";
-import GitNotes from './GitNotes';
-import InterviewNotes from './InterviewNotes';
+import GitNotes from "./GitNotes";
+import InterviewNotes from "./InterviewNotes";
 
-const useStyles = makeStyles(() => ({
-  listItem: {
-    display: "flex",
-    gap: "5px",
-  },
+const ListItem = styled("div")(() => ({
+  display: "flex",
+  gap: "5px",
 }));
 
-export default function Notes(props) {
-  const classes = useStyles(props);
+export default function Notes() {
   const [js, setJS] = useState(false);
   const [react, setReact] = useState(false);
   const [css, setCSS] = useState(false);
@@ -26,40 +23,40 @@ export default function Notes(props) {
   return (
     <>
       <>
-        <div className={classes.listItem}>
+        <ListItem>
           <b>JavaScript :</b>
           <div onClick={() => setJS((val) => !val)}>
             {js ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </div>
-        </div>
+        </ListItem>
         {js && <JSNotes />}
-        <div className={classes.listItem}>
+        <ListItem>
           <b>React:</b>
           <div onClick={() => setReact((val) => !val)}>
             {react ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </div>
-        </div>
+        </ListItem>
         {react && <ReactNotes />}
-        <div className={classes.listItem}>
+        <ListItem>
           <b>CSS:</b>
           <div onClick={() => setCSS((val) => !val)}>
             {css ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </div>
-        </div>
+        </ListItem>
         {css && <CSSNotes />}
-        <div className={classes.listItem}>
+        <ListItem>
           <b>Git:</b>
           <div onClick={() => setGit((val) => !val)}>
             {git ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </div>
-        </div>
+        </ListItem>
         {git && <GitNotes />}
-        <div className={classes.listItem}>
+        <ListItem>
           <b>Resume, Interview etc:</b>
           <div onClick={() => setInterview((val) => !val)}>
             {interview ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </div>
-        </div>
+        </ListItem>
         {interview && <InterviewNotes />}
         <br />
         <b>CORS:</b> <br />

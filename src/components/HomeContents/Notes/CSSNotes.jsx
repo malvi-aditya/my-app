@@ -1,19 +1,5 @@
-import { makeStyles } from "@material-ui/core/styles";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
-
-const useStyles = makeStyles(() => ({
-  content: {
-    marginRight: "16px",
-  },
-  iconText: {
-    display: "flex",
-    gap: "3px",
-    alignItems: "center",
-  },
-}));
 
 export default function CSSNotes() {
   return (

@@ -1,21 +1,19 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 
-const useStyles = makeStyles(() => ({
-  gridContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gridTemplateRows: "repeat(3, auto)",
-    gap: "10px",
+const GridContainer = styled("div")(() => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(3, 1fr)",
+  gridTemplateRows: "repeat(3, auto)",
+  gap: "10px",
+}));
+
+const GridItem = styled("div")(() => ({
+  padding: "10px",
+  border: "1px solid #ccc",
+  "&:hover": {
+    backgroundColor: "#f0f0f0",
   },
-  gridItem: {
-    padding: "10px",
-    border: "1px solid #ccc",
-    "&:hover": {
-      backgroundColor: "#f0f0f0",
-    },
-    textAlign: "center",
-  },
+  textAlign: "center",
 }));
 
 const num = [
@@ -53,13 +51,11 @@ const num = [
 
 export default function NumDisplay(props) {
   const { setCurr, reset, setReset } = props;
-  const classes = useStyles();
   return (
-    <div className={classes.gridContainer}>
+    <GridContainer>
       {num.map((obj) => {
         return (
-          <div
-            className={classes.gridItem}
+          <GridItem
             onClick={() => {
               if (reset) {
                 setCurr(`${obj.id}`);
@@ -68,9 +64,9 @@ export default function NumDisplay(props) {
             }}
           >
             {obj.id}
-          </div>
+          </GridItem>
         );
       })}
-    </div>
+    </GridContainer>
   );
 }

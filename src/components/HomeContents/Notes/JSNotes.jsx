@@ -1,23 +1,15 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { useState } from "react";
+import { styled } from "@mui/material/styles";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
-const useStyles = makeStyles(() => ({
-  content: {
-    marginRight: "16px",
-  },
-  iconText: {
-    display: "flex",
-    gap: "3px",
-    alignItems: "center",
-  },
+const Content = styled("div")(() => ({
+  marginRight: "16px",
 }));
 
-export default function JSNotes(props) {
-  const classes = useStyles();
+export default function JSNotes() {
   const [jsBasics, showJsbasics] = useState(false);
   const [closures, setClosures] = useState(false);
   const [funcProg, setFuncProg] = useState(false);
@@ -26,7 +18,7 @@ export default function JSNotes(props) {
   const [thisK, setThisK] = useState(false);
 
   return (
-    <div className={classes.content}>
+    <Content>
       <ul>
         <li>
           <div style={{ display: "flex", gap: "5px" }}>
@@ -62,7 +54,7 @@ export default function JSNotes(props) {
                 the function return the control of the program where the
                 function was invoked/back to the execution context. returned
                 value then replaced with "undefined" in the mapping.(var a =
-                func(n), a: undefined -> a: returnedVal). New execution context
+                func(n), a: undefined --- a: returnedVal). New execution context
                 created by function is now deleted, also global one after whole
                 execution done.
                 <br />
@@ -148,7 +140,7 @@ export default function JSNotes(props) {
           <b>Let & const</b>: <br />
           Both are hoisted but in a different way than "var". They are also
           allocated memory but in a different inaccesible memory space and not
-          in the global object(can see in Scope->Script section in inspect),
+          in the global object(can see in Scope → Script section in inspect),
           cannot be accessed until a value is put into them (will not exist in
           the window object also at the global level). <br />
           <b>Temporal dead zone</b>: It is the time between when let/const was
@@ -159,13 +151,13 @@ export default function JSNotes(props) {
           this zone throws reference error (var is not initialised) though they
           are hoisted and allocated memory.
           <br />
-          Redeclarations of let variables not allowed -> Syntax error (ex: let a
+          Redeclarations of let variables not allowed → Syntax error (ex: let a
           = 10; let a = 100; or let a=10; var a = 10;).
           <br />
           In "const", initialising inline is necessary unlike "let" (ex: let a;
-          a = 10 -> allowed but const a; a=10 -> syntax error, const a=10 ->
-          only valid way). const variable cannot change value (const a = 10;
-          a=100 invalid) <br />
+          a = 10 → allowed but const a; a=10 → syntax error, const a=10 → only
+          valid way). const variable cannot change value (const a = 10; a=100
+          invalid) <br />
           Syntax error: redeclaring let, const not initialised. Type error: re
           assigning const, reference error: trying to access anything
           inacccesible
@@ -180,8 +172,8 @@ export default function JSNotes(props) {
           Block scope: let & const inside a block are hoisted in a diff space in
           memory, called "Block" section (let and const declared in global are
           stored in "Script" section). they are block scope as they can be
-          accessed only in the block (see inspect->scope) ("var" always stored
-          in the global object). Block scopes also follow lexical scopes, these
+          accessed only in the block (see inspect→scope) ("var" always stored in
+          the global object). Block scopes also follow lexical scopes, these
           scopes are lexically present.
           <br />
           Shadowing: Redeclaring "var" shadows the previous value as the point
@@ -194,9 +186,9 @@ export default function JSNotes(props) {
           Illegal shadowing: let cannot be shadowed using a var: let a = 10;{" "}
           {"{ var a = 10; }"} (only let can shadow let), this is because var is
           trying to cross the boundary of its scope, shadowing works only when
-          we are within the boundary of our scope. vice versa is ok -> var a =
-          20; {"{ let a = 10; }"}. as var is function scope this is ok -> let a
-          = 10; function x() {"{ var a = 100; }"}. behaviour same for arrow func
+          we are within the boundary of our scope. vice versa is ok → var a =
+          20; {"{ let a = 10; }"}. as var is function scope this is ok → let a =
+          10; function x() {"{ var a = 100; }"}. behaviour same for arrow func
           as well.
         </li>
         <li>
@@ -339,7 +331,7 @@ export default function JSNotes(props) {
           statement but in func exp. var b will be undefined before executing
           the line where its assigned the func so we cannot call it before.{" "}
           <br />
-          a(); function a() {"{....}"}; -> works but this doesnt -> b(); var b =
+          a(); function a() {"{....}"}; → works but this doesnt → b(); var b =
           function () {"{....}"} <br />
           3. Anonymous Functions: Functions without a name, they dont have any
           identity. ex: function () {"{...}"}. We can only use them where func
@@ -370,7 +362,7 @@ export default function JSNotes(props) {
           and time after which to invoke the func (see inspect/source call stack
           to visualise this, after timer a func will be pushed in stack).
           <br />
-          function x(y) {"{...}"}; <br />x (function y() {"{...}"}}); <br />
+          function x(y) {"{...}"}; <br />x (function y() {"{...}"}); <br />
           Every execution in js happens only from the one call stack, can also
           say single threaded where this stack is the thread. when any operation
           blocks the call stack, it is called <b>
@@ -389,7 +381,7 @@ export default function JSNotes(props) {
           let count = 0; <br />
           document.getElementById("buttonId").addEventListener("click",
           console.log("Click: ", ++count)); <br />
-          } <br />
+          <br />
           attachEventListener(); <br />
           Event Listeners are heavy, meaning they take up memory due to
           maintaining closures etc. We can have multiple listeners etc. in our
@@ -689,9 +681,9 @@ export default function JSNotes(props) {
               function using then(), this callback func is automatically called
               after we get the data. <br />
               const promise = createOrder(cart); <br />
-              // promise -> {"{ data: undefined }"} empty before we get data.{" "}
+              // promise → {"{ data: undefined }"} empty before we get data.{" "}
               <br />
-              // promise -> {"{ data: orderDetails}"} after we get data. <br />
+              // promise → {"{ data: orderDetails}"} after we get data. <br />
               promise.then(function (orderId) {"{ proceedToPayment(orderId); }"}
               ); <br />
               So there is big difference b/w the callback way and the promise
@@ -716,8 +708,8 @@ export default function JSNotes(props) {
               We can add multiple .then() and chain to add many callback funcs.
               it solves the issue of passing multiple callback funcs (see
               callback issues) ex: <br />
-              createOrder(cart).then(data => return payment(data) ).then(data =>
-              return updateWallet(data)).then(data => return showSummary(data)){" "}
+              createOrder(cart).then(data =V return payment(data) ).then(data =V
+              return updateWallet(data)).then(data =V return showSummary(data)){" "}
               <br />
               Some things in chaining: When multiple .then chained, always
               return anything (like above) that need to be used in the next then
@@ -731,9 +723,9 @@ export default function JSNotes(props) {
               execute. ex: showsummary always runs, error in paymeny/createOrder
               will be catched.
               <br />
-              createOrder(cart).then(data => return payment(data) ).then(data =>
-              return updateWallet(data)).catch(err =>
-              console.log(err.message)).then(data => return showSummary(data))
+              createOrder(cart).then(data =V return payment(data) ).then(data =V
+              return updateWallet(data)).catch(err =V
+              console.log(err.message)).then(data =V return showSummary(data))
               <br /> <br />
               Create a promise: we call the Promise() constructor which takes a
               function and provides two functions resolve & reject given by
@@ -806,10 +798,10 @@ export default function JSNotes(props) {
               promise and returns the value/fetced data (Seeking for first
               success). If all promises fail, then an array of errors from all
               promises is returned It is called <b>Aggregate Error</b>. Access
-              the array of errors in catch section -> err.errors.
+              the array of errors in catch section → err.errors.
               <br />
               All the four above return a promise, attach a callback func using
-              then to see result. ex : Promise.all([p1, p2, p3]).then((res) =>{" "}
+              then to see result. ex : Promise.all([p1, p2, p3]).then((res) =V{" "}
               {"{...}"})
             </>
           )}
@@ -953,7 +945,7 @@ export default function JSNotes(props) {
               Old way of handling can also be don as async func returns a
               promise: <br />
               async function getData() {"{....}"}; <br />
-              getData().catch(err => console.log(err)); <br />
+              getData().catch(err =V console.log(err)); <br />
               Async await is just a <b>syntactic sugar</b> over then and catch,
               behind the scenes it uses then only. improves readability and the
               flow makes sense, we dont have to deal with callback funcs and
@@ -1091,7 +1083,7 @@ export default function JSNotes(props) {
               <b>In arrow functions</b>: this takes the value from its lexical
               env, arrow functions do not have their own "this" and dont have
               the concept of "this". In the person1 ex, if we replace printName
-              with: printName: () => {"{ console.log(this) }"}
+              with: printName: () =V {"{ console.log(this) }"}
               , will not work, instead global object will be printed. below the
               object will get printed as the arrow function is inside another
               fun ( its enclosing lexical context ), just behaves like above
@@ -1268,6 +1260,6 @@ export default function JSNotes(props) {
           interfaces. 4. Capturing events from dynamically generated content.
         </li>
       </ul>
-    </div>
+    </Content>
   );
 }

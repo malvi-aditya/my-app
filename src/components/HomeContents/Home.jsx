@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -9,78 +9,56 @@ import Notes from "./Notes/Notes";
 import Experimenting from "./Experimenting";
 import ReactCourse from "./ReactCourse/ReactCourse";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    marginTop: "16px",
-    marginLeft: "32px",
-    display: "flex",
-    flexDirection: "column",
-  },
-  tabContainer: {
-    overflowY: "auto",
-  },
+const Root = styled("div")(() => ({
+  marginTop: "16px",
+  marginLeft: "32px",
+  display: "flex",
+  flexDirection: "column",
+}));
+
+const TabContainer = styled("div")(() => ({
+  overflowY: "auto",
 }));
 
 const tabConfig = [
-  {
-    id: 0,
-    name: "Study Material",
-  },
-  {
-    id: 1,
-    name: "Calculator",
-  },
-  {
-    id: 2,
-    name: "Notes",
-  },
-  {
-    id: 3,
-    name: "Experimenting",
-  },
-  {
-    id: 4,
-    name: "React Course",
-  },
+  { id: 0, name: "Study Material" },
+  { id: 1, name: "Calculator" },
+  { id: 2, name: "Notes" },
+  { id: 3, name: "Experimenting" },
+  { id: 4, name: "React Course" },
 ];
 
 export default function Home() {
-  const classes = useStyles();
   const [tab, setTab] = useState(0);
   const tabContentRef = useRef(null);
 
   useEffect(() => {
-    // Adjust the height of the tab content container when the component mounts
     adjustTabContentHeight();
-    // Re-adjust the height when the window is resized
     window.addEventListener("resize", adjustTabContentHeight);
-    // Cleanup event listener
-    return () => {
-      window.removeEventListener("resize", adjustTabContentHeight);
-    };
+    return () => window.removeEventListener("resize", adjustTabContentHeight);
   }, [tab]);
 
   const adjustTabContentHeight = () => {
-    // Calculate the height of the available space
+    if (!tabContentRef.current) return;
     const availableHeight =
       window.innerHeight - tabContentRef.current.offsetTop;
-    // Set the height of the tab content container
     tabContentRef.current.style.height = `${availableHeight}px`;
   };
 
   return (
-    <div className={classes.root}>
+    <Root>
       <h3>Hey there!</h3>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={tab} onChange={(event, val) => setTab(val)}>
-          {tabConfig.map((obj) => {
-            return <Tab label={obj.name} id={obj.id} />;
-          })}
+          {tabConfig.map((obj) => (
+            <Tab key={obj.id} label={obj.name} />
+          ))}
         </Tabs>
       </Box>
-      <div ref={tabContentRef} className={classes.tabContainer}>
+
+      <TabContainer ref={tabContentRef}>
         {tab === 0 ? (
-          <Resources classes={classes} />
+          <Resources />
         ) : tab === 1 ? (
           <Calculator />
         ) : tab === 2 ? (
@@ -90,7 +68,7 @@ export default function Home() {
         ) : (
           <ReactCourse />
         )}
-      </div>
-    </div>
+      </TabContainer>
+    </Root>
   );
 }

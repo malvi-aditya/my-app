@@ -1,23 +1,20 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 
-const useStyles = makeStyles(() => ({
-  content: {
-    paddingTop: "8px",
-  },
-  gridContainer: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-  },
+const Content = styled("div")(() => ({
+  paddingTop: "8px",
 }));
 
-export default function Resources(props) {
-  const classes = useStyles(props);
+const GridContainer = styled("div")(() => ({
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+}));
+
+export default function Resources() {
   return (
     <>
       <h4> Do these topics! </h4>
-      <div className={classes.gridContainer}>
-        <div className={classes.content}>
+      <GridContainer>
+        <Content>
           <p>All React hooks</p>
           <p>Namaste Javascript Season 1, Season 2 </p>
           <p>
@@ -68,8 +65,8 @@ export default function Resources(props) {
             https://google.github.io/styleguide/
           </a>
           <br />
-        </div>
-        <div className={classes.content}>
+        </Content>
+        <Content>
           <p>
             {" "}
             React Routers working etc. , Virtual DOM, Event Listeners
@@ -84,8 +81,8 @@ export default function Resources(props) {
             Event Delegation, react suspense, react.memo, render props, HOCs,
             performance optimization in virtual DOM, React.lazy, lazy Loading{" "}
           </p>
-        </div>
-      </div>
+        </Content>
+      </GridContainer>
     </>
   );
 }

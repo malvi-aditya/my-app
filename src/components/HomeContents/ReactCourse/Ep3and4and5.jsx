@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Ep3and4and5() {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>

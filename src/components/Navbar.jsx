@@ -6,7 +6,7 @@ export default function Navbar() {
       <Link className="navbar-brand" to="/">
         Home
       </Link>
-      <button
+      {/* <button
         className="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -23,7 +23,7 @@ export default function Navbar() {
             Image Captioning Model
           </Link>
         </div>
-      </div>
+      </div> */}
     </nav>
   );
 }

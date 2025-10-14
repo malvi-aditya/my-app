@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
-export default function ReactNotes(props) {
+export default function ReactNotes() {
   const [showPerf, setShowPerf] = useState(false);
   const [hooks, setHooks] = useState(false);
   return (
@@ -39,11 +39,12 @@ export default function ReactNotes(props) {
               empty dependency array) to perform some actions on window resize
               etc. return the cleanup values from the useEffect so the listeners
               are removed on unmount ex: <br />
-              useEffect(() => {"{"} <br />
+              useEffect(() =V {"{"} <br />
               window.addEventListener('resize', handleResize); <br />
-              return () => {"{"} <br />
-              window.removeEventListener('resize', handleResize); }<br />} , []){" "}
+              return () =V {"{"} <br />
+              window.removeEventListener('resize', handleResize); {"}"}
               <br />
+              {"}"} , []) <br />
               3. <b>useMemo</b>: If there is a slow function in our code, use
               useMemo to improve/optimise performance. Memo - Memoization, cache
               the result so we dont have to compute it every time. Pass a func
@@ -74,7 +75,7 @@ export default function ReactNotes(props) {
               <br />
               const renderCount = useRef(1); // returns {"{ current: 1 }"} in
               renderCount <br />
-              useEffect(() =>{" "}
+              useEffect(() =V{" "}
               {"{ renderCount.current = renderCount.current + 1 }"}) <br />
               Most common use case is to create a ref and attach it to a element
               to perform some actions on it. Ex: on clicking button the input
@@ -100,7 +101,7 @@ export default function ReactNotes(props) {
               variable we only have the current value and not the previous
               value. We can add an useEffect which triggers on the states
               change, and pass a func where we set the current state in the ref
-              - useEffect(() => {"{ inputRef.current = state }"}, [state]){" "}
+              - useEffect(() =V {"{ inputRef.current = state }"}, [state]){" "}
               <br />
               5. <b>useContext</b>: Consider this ThemeContext created with
               createContext function export to use in rest of the app.
@@ -243,8 +244,8 @@ export default function ReactNotes(props) {
               contents inside of it unless something changes, after wrapping our
               func with useCallback it will only recreate our func when any of
               the dependencies changes. ex: <br />
-              const a = () => {"{...}"} // before wrapping with useCallback
-              const a = useCallback( () => {"{...}"}, [state]) // after wrapping{" "}
+              const a = () =V {"{...}"} // before wrapping with useCallback
+              const a = useCallback( () =V {"{...}"}, [state]) // after wrapping{" "}
               <br />
               <b>Difference b/w useMemo & useCallback</b> is useMemo takes a
               func and returns the return value of the func whereas useCallback

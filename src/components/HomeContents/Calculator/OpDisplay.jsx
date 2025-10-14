@@ -1,23 +1,21 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 
-const useStyles = makeStyles(() => ({
-  gridContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gridTemplateRows: "repeat(4, auto)",
-    gap: "10px",
-    paddingTop: "16px",
+const GridContainer = styled("div")(() => ({
+  display: "grid",
+  gridTemplateColumns: "repeat(4, 1fr)",
+  gridTemplateRows: "repeat(4, auto)",
+  gap: "10px",
+  paddingTop: "16px",
+}));
+
+const GridItem = styled("div")(() => ({
+  padding: "10px",
+  border: "1px solid #ccc",
+  "&:hover": {
+    backgroundColor: "#f0f0f0",
   },
-  gridItem: {
-    padding: "10px",
-    border: "1px solid #ccc",
-    "&:hover": {
-      backgroundColor: "#f0f0f0",
-    },
-    alignItems: "center",
-    textAlign: "center",
-  },
+  alignItems: "center",
+  textAlign: "center",
 }));
 
 const op = [
@@ -35,22 +33,13 @@ const op = [
   },
 ];
 
-export default function OpDisplay(props) {
-  const classes = useStyles();
-  const { setOp, curr, setN1, setReset, op: oper, n1, setCurr } = props;
+export default function OpDisplay() {
+  // const { setOp, curr, setN1, setReset, op: oper, n1, setCurr } = props;
   return (
-    <div className={classes.gridContainer}>
+    <GridContainer>
       {op.map((obj) => {
-        return (
-          <div
-            className={classes.gridItem}
-            onClick={() => {
-            }}
-          >
-            {obj.id}
-          </div>
-        );
+        return <GridItem onClick={() => {}}>{obj.id}</GridItem>;
       })}
-    </div>
+    </GridContainer>
   );
 }
