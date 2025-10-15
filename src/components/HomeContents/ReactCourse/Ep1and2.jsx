@@ -223,15 +223,15 @@ export default function Ep1and2() {
             needed in newer versions). <br />→ <b>Note</b>: If we inject a JS
             file/script in index.html using script tag and the JS file has
             imports in it (import React...) then it will throw error. This is
-            because it is a normal JS file and JS does not understand 'import'.
-            Add the attribute "type: 'module'" in script tag to treat it as a
-            module and not plain js file.
+            because it is a normal JS file and JS does not understand "import".
+            Add the attribute - type: 'module', in script tag to treat it as a
+            module and not plain JS file.
           </li>
           <li>
             <b>HMR</b> (Hot Module replacement): On saving file, parcel (vite
             etc.) automatically reloads the hosted page with the new changes,
             this is done by HMR. A file watching algo written in cpp tracks of
-            the files to do this. <br s />
+            the files to do this. <br />
             → It also caches things to speed up the build process. Image
             optimization, minification of prod build, compress, consistent
             hashing, code splitting, differential bundling, error handling,
