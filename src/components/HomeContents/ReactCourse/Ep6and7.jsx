@@ -37,7 +37,7 @@ export default function Ep6and7() {
           approach giving better UX.
           <br />→ In the first way, until we get data, our page is white or
           frozen. In second way, we render what we can and update later. React
-          has fast rendering cycle, so second way is preffered as we can
+          has fast rendering cycle, so second way is preferred as we can
           re-render as many times we want.
         </li>
         <li>
