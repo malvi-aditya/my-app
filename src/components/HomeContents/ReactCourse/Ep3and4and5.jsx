@@ -208,17 +208,19 @@ export default function Ep3and4and5() {
           It makes a local state of the component.
         </li>
         <li>
-          Reconciliation Algo (React Fiber): <br />
+          Reconciliation Algo (React Fiber):
+          <br />
           → Lets say there is a container and it has list of children or many
           child elements, and our UI changes so that the child elements are
-          filtered so they reduce in number. <br />
+          filtered so they reduce in number.
+          <br />
           → Virtual DOM: It is not the actual DOM tree, React creates a virtual
           DOM tree. Virtual DOM is a representation of an actual DOM. It is made
           using the React elements, the objects which we saw earlier, basically
           the nesting of these objects that we get from createElement. Virtual
           DOM is an old thing that existed long time before React, React
           developers built the algo using virtual DOM to make it fast.
-          <br />→ Diff Algo: It finds out the difference between two virtual
+          <br /> → Diff Algo: It finds out the difference between two virtual
           DOMs, the previous one and the updated one. Once the difference is
           calculated then actual updates to DOM are done. Finding out diff b/w
           two HTML elements tree is tough but diff b/w two objects (React
