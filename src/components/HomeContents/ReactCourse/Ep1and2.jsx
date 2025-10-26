@@ -1,9 +1,9 @@
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
-export default function Ep1and2() {
+export default function Ep1and2 () {
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div>
         <h6>Episode 1:</h6>
         <ul>
@@ -14,14 +14,14 @@ export default function Ep1and2() {
           </li>
           <li>
             Create an html h1 element and add text:
-            <SyntaxHighlighter language="javascript" style={docco}>
+            <SyntaxHighlighter language='javascript' style={docco}>
               {`
                 const heading = document.createElement("h1"); 
                 heading.innerHTML = 'Some text';
               `}
             </SyntaxHighlighter>
             appendChild(): Add a child/html element to a div:
-            <SyntaxHighlighter language="javascript" style={docco}>
+            <SyntaxHighlighter language='javascript' style={docco}>
               {`
                 const root = document.getElementById('root');
                 root.appendChild(heading);
@@ -29,13 +29,13 @@ export default function Ep1and2() {
             </SyntaxHighlighter>
           </li>
           <li>
-            Browser do not understand react, we have to configure our project to
+            Browser do not understand React, we have to configure our project to
             use it, it understands JS due to JS engine, browser APIs etc.
             <br />→ <b>CDN </b>(Content Delivery Network) and <b>crossorigin</b>
-            ( CORS: Cross-Origin Resource Sharing) : research and understand.
+            ( CORS: Cross-Origin Resource Sharing): research and understand.
             <br />→ One way of using react in index.html: Get the cdn link and
-            add{" "}
-            <span style={{ backgroundColor: "#e89f31ff" }}>
+            add{' '}
+            <span style={{ backgroundColor: '#e89f31ff' }}>
               {`<script crossorigin src='...cdn link'></script>`}
             </span>
             .
@@ -47,11 +47,104 @@ export default function Ep1and2() {
             Native), React 3D etc.
           </li>
           <li>
+            In Vite: You explicitly load your entry file (main.jsx) in your
+            index.html:
+            <SyntaxHighlighter language='javascript' style={docco}>
+              {`
+                <!DOCTYPE html> 
+                <html lang="en"> 
+                  <head>
+                    <title>Aditya Malvi</title> 
+                  </head> 
+                  <body> 
+                    <div id="root"></div> 
+                    <script type="module" src="/src/main.jsx"></script> // this line
+                  </body> 
+                </html>
+              `}
+            </SyntaxHighlighter>
+            → Vite’s design philosophy is simple and modern — it treats your
+            HTML file as the entry point, like a normal web app.
+            <br /> → It uses native ES Modules (type="module") so the browser
+            can load the JS directly while Vite handles transformations behind
+            the scenes. So Vite doesn’t “inject” anything; your HTML declares
+            exactly what should run.
+            <br /> → In Create React App (CRA) You don't see a {`<script>`} tag
+            for your JS entry file (index.js) in the HTML.
+            <br /> → ✅ Why: CRA's build system (Webpack) injects your React
+            app's entry file (index.js) into the HTML at build time
+            automatically. The index.html you see in /public is just a template
+            — the actual HTML served to the browser is modified during build.
+            When you run npm start, Webpack replaces this line internally:
+            <SyntaxHighlighter language='javascript' style={docco}>
+              {`
+                <div id="root"></div>
+              `}
+            </SyntaxHighlighter>
+            with something like:
+            <SyntaxHighlighter language='javascript' style={docco}>
+              {`
+                <div id="root"></div>
+                <script src="/static/js/bundle.js"></script>
+              `}
+            </SyntaxHighlighter>
+            → That bundle.js contains your compiled app starting from
+            src/index.js. So your CRA app does have an entry point (usually
+            src/index.js), but it's not referenced directly in HTML — Webpack
+            handles it.
+          </li>
+          <li>
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Vite</th>
+                  <th>Create React App (CRA)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Entry file</td>
+                  <td style={{ paddingRight: '16px' }}>
+                    Declared manually in HTML (
+                    <code>
+                      &lt;script type="module" src="/src/main.jsx"&gt;
+                    </code>
+                    )
+                  </td>
+                  <td>
+                    Implicit — Webpack injects <code>index.js</code> bundle
+                  </td>
+                </tr>
+                <tr>
+                  <td>Build tool</td>
+                  <td>Vite (ES Modules + Rollup)</td>
+                  <td>Webpack</td>
+                </tr>
+                <tr>
+                  <td>HTML role</td>
+                  <td>Real entry point</td>
+                  <td>Template for injection</td>
+                </tr>
+                <tr>
+                  <td>Dev server</td>
+                  <td>Fast, native ES module-based</td>
+                  <td>Slower, Webpack-based</td>
+                </tr>
+                <tr>
+                  <td style={{ paddingRight: '16px' }}>JSX transformation</td>
+                  <td>via ESBuild (super fast)</td>
+                  <td>via Babel</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>
             Creating element in React, in index.html file inside script tag:
-            <SyntaxHighlighter language="javascript" style={docco}>
+            <SyntaxHighlighter language='javascript' style={docco}>
               {`
               <script> 
-                const heading = React.createElement("h1", {id: 'heading'}, "Some text");
+                const heading = React.createElement("h1", { id: 'heading' }, "Some text");
                 const root = ReactDOM.createRoot(document.getElementById("root"));
                 root.render(heading);          
               </script>
@@ -78,19 +171,19 @@ export default function Ep1and2() {
           </li>
           <li>
             Nesting: Add multiple createElement inside each other. <br />
-            <SyntaxHighlighter language="javascript" style={docco}>
+            <SyntaxHighlighter language='javascript' style={docco}>
               {`
               const parent = React.createElement( 
                                                   "div", 
                                                   {id: 'parent'},                                                 
                                                   React.createElement(
-                                                    "div", {id: 'child'}, React.createElement("h1", {}, 'Text content')           
+                                                    "div", { id: 'child' }, React.createElement("h1", {}, 'Text content')           
                                                   )
-                                                )  
+                                                );
               `}
             </SyntaxHighlighter>
             Rendered Output:
-            <SyntaxHighlighter language="javascript" style={docco}>
+            <SyntaxHighlighter language='javascript' style={docco}>
               {`
                 <div id="parent">
                   <div id="child">
@@ -100,17 +193,17 @@ export default function Ep1and2() {
               `}
             </SyntaxHighlighter>
             Pass an array as the third argument to have multiple children.
-            <SyntaxHighlighter language="javascript" style={docco}>
+            <SyntaxHighlighter language='javascript' style={docco}>
               {`
                 const parent = React.createElement(
                                                   "div", 
                                                   {id: 'parent'}, 
-                                                  [ React.createElement("div", {id: 'child1'}, 'Content1'), React.createElement("div", {id: 'child2'}, 'Content2') ]
-                                                  ) 
+                                                  [ React.createElement("div", { id: 'child1' }, 'Content1'), React.createElement("div", { id: 'child2' }, 'Content2') ]
+                                                  );
               `}
             </SyntaxHighlighter>
             Rendered Output:
-            <SyntaxHighlighter language="javascript" style={docco}>
+            <SyntaxHighlighter language='javascript' style={docco}>
               {`
                 <div id="parent">
                   <div id="child1">
@@ -255,5 +348,5 @@ export default function Ep1and2() {
         </ul>
       </div>
     </div>
-  );
+  )
 }
