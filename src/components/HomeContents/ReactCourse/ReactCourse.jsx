@@ -8,7 +8,7 @@ import ExtraHooks from "./ExtraHooks";
 
 const Root = styled("div")(() => ({
   display: "flex",
-  marginTop: "10px",
+  margin: "16px 16px 16px 0px",
   flexDirection: "column",
 }));
 
