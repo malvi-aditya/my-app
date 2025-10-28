@@ -1,7 +1,7 @@
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
-export default function Ep6and7() {
+export default function Ep6and7 () {
   return (
     <>
       <h6>Episode 6:</h6>
@@ -13,7 +13,7 @@ export default function Ep6and7() {
           project, every thing in the same repo.
         </li>
         <li>
-          <b>Micro service architecture</b>: New and preffered way of building
+          <b>Micro service architecture</b>: New and preferred way of building
           applications. In this, we have different services/projects for every
           thing, like a backend service, UI sevice etc, running independently,
           all services combine together to form the app.
@@ -69,7 +69,7 @@ export default function Ep6and7() {
           data, then show the actual data.
           <br />→ This concept is known as <b>conditional rendering</b>, where
           we render different things based on the current scenario:
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`
               if(!data) {
                 return <Loader />
@@ -116,7 +116,7 @@ export default function Ep6and7() {
           useState: Can only be used inside of a func and preferrably define
           them at the start of the func/component. Also never define them
           conditionally or inside for loops or any function
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`
               // incorrect usages
               if (...) const [a, setA] = useState(). 
@@ -140,7 +140,7 @@ export default function Ep6and7() {
           <br />→ Once we have created this config we can use it over the app
           using RouterProvider, provide the config to the render using
           RouterProvider.
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`
               import ReactDOM from 'react-dom';
               import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -182,7 +182,7 @@ export default function Ep6and7() {
           <br />→ We do this using "Outlet", the Outlet component will be filled
           with the child component according to the path we are on (we will not
           see outlet in HTML DOM, everything happens behind the scenes).
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`
               import ReactDOM from 'react-dom';
               import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
@@ -276,5 +276,5 @@ export default function Ep6and7() {
         </li>
       </ul>
     </>
-  );
+  )
 }
