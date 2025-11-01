@@ -1,200 +1,240 @@
-import { useState } from "react";
-import { styled } from "@mui/material/styles";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { useState } from 'react'
+import { styled } from '@mui/material/styles'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
-const Content = styled("div")(() => ({
-  marginRight: "16px",
-}));
+const Content = styled('div')(() => ({
+  margin: '16px 16px 16px 0px'
+}))
 
-export default function JSNotes() {
-  const [jsBasics, showJsbasics] = useState(false);
-  const [closures, setClosures] = useState(false);
-  const [funcProg, setFuncProg] = useState(false);
-  const [promise, setPromise] = useState(false);
-  const [asynAwait, setAsynAwait] = useState(false);
-  const [thisK, setThisK] = useState(false);
+export default function JSNotes () {
+  const [closures, setClosures] = useState(false)
+  const [funcProg, setFuncProg] = useState(false)
+  const [promise, setPromise] = useState(false)
+  const [asynAwait, setAsynAwait] = useState(false)
+  const [thisK, setThisK] = useState(false)
 
   return (
     <Content>
       <ul>
         <li>
-          <div style={{ display: "flex", gap: "5px" }}>
-            Javascript Basics:
-            <div onClick={() => showJsbasics((val) => !val)}>
-              {jsBasics ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </div>
-          </div>
-          {jsBasics && (
-            <ul>
-              <li>
-                Javascript runs in an execution context (can be seen like a big
-                box), which has two parts.
-                <br />
-                1. Variable environment (Memory component): has variables and
-                function mapping (a: 5, fn: {"{...}"}).
-                <br />
-                2. Thread of execution (Code component): where code is executed
-                line by line.
-                <br />
-                Global execution context created first, execution happens in
-                phases. First phase is Memory allocation (creation), JS skims
-                thorugh all lines of code and in variable env it creates mapping
-                of all funcs and variables. Variables have value "undefined" and
-                in func directly the code/func definition is copied and stored
-                as value.
-                <br />
-                The second, Execution, variables (in env) will be replaced by
-                actual assigned/calculated value. When function invoked, new
-                execution context similar to our global context(same 2
-                components and same phase flow) is created inside our global
-                context. When "return" keyword encountered in function, it tells
-                the function return the control of the program where the
-                function was invoked/back to the execution context. returned
-                value then replaced with "undefined" in the mapping.(var a =
-                func(n), a: undefined --- a: returnedVal). New execution context
-                created by function is now deleted, also global one after whole
-                execution done.
-                <br />
-                JS has its call stack to manage all these execution context, at
-                the bottom will be our global execution context. Subsequent
-                context created will pushed/popped when created/deleted. Control
-                goes back to context on top of stack. Stack maintains order of
-                execution of execution contexts. (Call stack can be seen in our
-                inspect tools), after global context is popped when whole code
-                execution is done then the call stack is finally empty.
-              </li>
-              <li>
-                It is synchronous, single threaded language. Single threaded -
-                one line/command executed at a time. synchronous - process in a
-                specific order, go to the next line when current done
-              </li>
-              <li>
-                <b>Hoisting</b>: Variable and function declarations are always
-                moved to top of the code, so if a function is invoked before it
-                is defined it still works (same for variables). Creation of
-                execution context can explain this. If a func is logged (without
-                invoking) before the definition, func definition is shown, and
-                "undefined" for variables, explained by exec context memory
-                creation (1st phase).
-                <br />
-                If a variable is not defined at all and we try to use it, then
-                we get "Reference error: not defined" as the var does not exist
-                in the global context/ no memory allocated for it. It needs to
-                be defined atleast once anyhwere, diff between "undefined" and
-                not defined is "undefined" is a special value/placeholder given
-                to var initially/for time being (until is is assigned to
-                something else) when it is added in memory/context. It takes
-                space in memory and is not empty.
-                <br />
-                <b>Imp.:</b> If a func is defined as an arrow func then it
-                behaves like a var and will have value "undefined" during the
-                memory alloc phase. It needs to be defined using the "function"
-                keyword to be available/copied and stored in the context. Also
-                this acts like a var:-- var a = function(){"{...}"}
-              </li>
-              <li>
-                Loosely/Weakly typed language, variables can hold any type. Not
-                a good practice to assign a variables value to "undefined" as it
-                is a kind of special placeholder to say a variable was never
-                defined through the code.
-              </li>
-            </ul>
-          )}
+          Javascript Basics:
+          <ul>
+            <li>
+              Javascript runs in an execution context (can be seen like a big
+              box), which has two parts.
+              <br />
+              1. Variable environment (Memory component): Has variables and
+              function definitions stored. ( a: 5, funcA: {
+                '{...//definition}'
+              }{' '}
+              ).
+              <br />
+              2. Thread of execution (Code component): Where code is executed
+              line by line.
+              <br />→ Global execution context created first, execution happens
+              in phases. First phase is Memory allocation (creation), JS skims
+              through all lines of code and in variable env it creates mapping
+              of all funcs and variables (key-value pairs, key being
+              variable/func name). Variables have value "undefined" ( a:
+              undefined ) and for functions, directly the code (function
+              definition) is copied and stored as value ( funcA:{' '}
+              {'{ console.log(a) }'} )
+              <br />
+              → The second, Execution phase, variables (in env) will be replaced
+              by actual assigned/calculated value. When a function is invoked,
+              new execution context, similar to our global context (same 2
+              components, var env and thread of execution, and same phase flow),
+              is created inside our global context. When "return" keyword is
+              encountered in the function, it tells the function to return the
+              control of the program where the function was invoked; back to the
+              execution context. Returned value then replaced with "undefined"
+              in the mapping.
+              <br />
+              var a = function() {'{ ... }'} ; a: undefined → a: returnedVal
+              <br />
+              New execution context created by function is now deleted, also
+              global one after whole execution done.
+              <br />→ JS has its call stack to manage all these execution
+              contexts, at the bottom will be our global execution context.
+              Subsequent contexts created will pushed/popped when
+              created/deleted. Control goes back to context on top of stack.
+              Stack maintains order of execution of execution contexts. (Call
+              stack can be seen in our inspect tools), after global context is
+              popped when whole code execution is done, then the call stack is
+              finally empty.
+            </li>
+            <li>
+              It is synchronous, single threaded language. Single threaded: One
+              line/command executed at a time. Synchronous: Process in a
+              specific order, go to the next line when current done.
+            </li>
+            <li>
+              <b>Hoisting</b>: Variable and function declarations are always
+              moved to top of the code, so if a function is invoked before it is
+              defined it still works (same for variables). Creation of execution
+              context can explain this.
+              <br />→ If a function is logged (without invoking) before its
+              definition, function definition is shown, and "undefined" is
+              logged for variables, explained by execution context memory
+              creation (1st phase).
+              <SyntaxHighlighter language='javascript' style={docco}>
+                {`
+                  function x() {
+                    console.log(a); // prints "undefined"
+                    var a = 7;
+
+                    console.log(y); // prints definition of y
+
+                    function y() {
+                      console.log(a);
+                    }
+                  }
+                `}
+              </SyntaxHighlighter>
+              → If a variable is not defined at all anywhere, and we try to use
+              it, then we get "Reference error: not defined" as the variable
+              does not exist in the global context at all (no memory allocated
+              for it).
+              <br />
+              → It needs to be defined atleast once anywhere in the code,
+              difference between "undefined" and not defined is "undefined" is a
+              special value/placeholder given to any variable initially (for
+              time being, until it is assigned to something else, any value)
+              when it is added in memory/context. It takes space in memory and
+              is not empty.
+              <br />→ <b>Imp:</b> If a function is defined as an arrow function,
+              then it behaves like a variable and will have value "undefined"
+              during the memory allocation phase. It needs to be defined using
+              the "function" keyword to be available (its definition copied) and
+              stored in the context. Also this acts like a variable: var a =
+              function(){'{...}'}
+            </li>
+            <li>
+              Loosely/Weakly typed language, variables can hold any type. Not a
+              good practice to assign a variables value to "undefined" as it is
+              a kind of special placeholder to say a variable was never defined
+              through the code.
+            </li>
+          </ul>
         </li>
         <li>
           Javascript Functions: <br />
-          When function invoked, a new exec context created. Variables in the
-          new context will be independent of var of same name in global context.
-          Control of exec will be in our current context and js will look for
-          var in local memory. When func exec done, context popped from call
-          stack and control returns back to place where func was invoked.
-          <br />
-          window & this keywords: these global object is always created at the
-          global level even if js file is empty. wherever js engine exists and
-          js runs, global object is created (object name can be different when
-          js running elsewhere like server etc., for browsers mainly: window).
-          At the global level, this === window is true meaning both are same.
-          Any var or func created in global context will have mapping in window
-          object as well, var declared inside a func will not be in window
+          → When function invoked, a new execution context is created. Variables
+          in the new context will be independent of variables of same name in
+          global context. Control of execution will be in our current context
+          and JS will look for variable in local memory. When function execution
+          is done, context is popped from the call stack and control returns
+          back to place where func was invoked.
+          <br />→ window & this keywords: These global objects are always
+          created at the global level even if JS file is empty. Wherever JS
+          engine exists and JS runs, global object is created (object name can
+          be different when JS is running elsewhere like server etc, for
+          browsers its name is mainly: window). At the global level, this ===
+          window prints "true" meaning both are same. Any variable or function
+          created in the global context will have mapping in window object as
+          well, variables declared inside a function will not be in the window
           object.
         </li>
         <li>
-          <b>Scope Chain</b>: <br />
-          Whenever a exec context is created, lexical env is created,{" "}
-          <b>lexical env is local memory + lexical env of parent</b>. (lexical:
-          hierarchy/sequence ) ex: func a() {"{ func c() {...} }"} - func c is
-          lexically inside a and a is lexically inside the global scope.
-          (location where the code is physically present). In the memory part of
-          the context, there is reference to its lexical parent(env/memory).
-          Global context points to null.
+          <b>Scope Chain</b>: <br />→ Whenever a execution context is created,
+          lexical env is created,
+          <b> lexical env is local memory + lexical env of parent</b>. (lexical:
+          hierarchy/sequence ) ex:
           <br />
-          This linking/referencing chain of every env to its parent is scope
-          chain. If js engine does not find a var etc. in the local memory then
-          it goes to its lexical parent memory/next level of scope chain and so
-          on.
+          function a() {'{ function c() {...} }'}
+          <br />
+          → function c is lexically inside function a and a is lexically inside
+          the global scope. (location where the code is physically present). In
+          the memory part of the context, there is reference to its lexical
+          parent (env/memory). Global context points to null.
+          <br />→ This linking/referencing chain of every env to its parent is
+          scope chain. If JS engine does not find a variable etc, in the local
+          memory then it goes to its lexical parent memory/next level of scope
+          chain and so on.
         </li>
         <li>
           <b>Let & const</b>: <br />
-          Both are hoisted but in a different way than "var". They are also
+          → Both are hoisted but in a different way than "var". They are also
           allocated memory but in a different inaccesible memory space and not
           in the global object(can see in Scope → Script section in inspect),
           cannot be accessed until a value is put into them (will not exist in
-          the window object also at the global level). <br />
-          <b>Temporal dead zone</b>: It is the time between when let/const was
-          hoisted and till it is initialised with some value. 1st phase when js
-          skims and allocates memory, let/const are in a diff inaccessible
-          memory aka temporal dead zone, when code is executed and some value
-          assigned then they are out of the zone. Trying to access variable in
-          this zone throws reference error (var is not initialised) though they
-          are hoisted and allocated memory.
+          the window object also at the global level).
+          <br />→ <b>Temporal dead zone</b>: It is the time between when
+          let/const was hoisted and till it is initialised with some value. 1st
+          phase when JS skims and allocates memory, let/const are in a different
+          inaccessible memory aka temporal dead zone. When code is executed and
+          some value is assigned to the variable then they are out of the zone.
+          Trying to access variable in this zone throws reference error
+          (Uncaught ReferenceError: Cannot access 'var_name' before
+          initialization) though they are hoisted and allocated memory.
           <br />
-          Redeclarations of let variables not allowed → Syntax error (ex: let a
-          = 10; let a = 100; or let a=10; var a = 10;).
+          → Redeclarations of let variables not allowed → Syntax error (ex: let
+          a = 10; let a = 100; or let a=10; var a = 10;).
           <br />
           In "const", initialising inline is necessary unlike "let" (ex: let a;
-          a = 10 → allowed but const a; a=10 → syntax error, const a=10 → only
-          valid way). const variable cannot change value (const a = 10; a=100
+          a = 10 → allowed but const a; a=10; → syntax error, const a=10; → only
+          valid way). const variable cannot change value (const a = 10; a=100;
           invalid) <br />
           Syntax error: redeclaring let, const not initialised. Type error: re
           assigning const, reference error: trying to access anything
           inacccesible
         </li>
         <li>
-          <b>Blocks in js</b>: <br />
-          Also known as compound statement, it is defined by curly braces {"{}"}
-          , used to combine multiple js statements into a group. use of block:
-          multiple statements can be gropued and used at a place where js
-          expects a single statement (like with "if" or "for", if expects single
-          statement ahead of it: if(true) "here"). <br />
-          Block scope: let & const inside a block are hoisted in a diff space in
-          memory, called "Block" section (let and const declared in global are
-          stored in "Script" section). they are block scope as they can be
-          accessed only in the block (see inspect→scope) ("var" always stored in
-          the global object). Block scopes also follow lexical scopes, these
-          scopes are lexically present.
+          <b>Blocks in JS</b>:
+          <br />→ Also known as compound statement, it is defined by curly
+          braces {'{}'}
+          , used to combine multiple JS statements into a group. Use of block:
+          multiple statements can be grouped and used at a place where JS
+          expects a single statement (like with "if" or "for", "if" expects
+          single statement ahead of it: if(true) "here").
           <br />
-          Shadowing: Redeclaring "var" shadows the previous value as the point
-          to same location in memory (var a=10; {"{var a = 100}"}; -- a will be
-          changed to 100). "let" declared inside block shadows "let" declared
-          outside the block, both let store diff values ( let a =10;{" "}
-          {"{ let a = 100; console.log(a) }"}; console.log(a); --- log inside
-          block prints 100, outside log prints 10). works the same way in case
-          of functions. <br />
-          Illegal shadowing: let cannot be shadowed using a var: let a = 10;{" "}
-          {"{ var a = 10; }"} (only let can shadow let), this is because var is
-          trying to cross the boundary of its scope, shadowing works only when
-          we are within the boundary of our scope. vice versa is ok → var a =
-          20; {"{ let a = 10; }"}. as var is function scope this is ok → let a =
-          10; function x() {"{ var a = 100; }"}. behaviour same for arrow func
-          as well.
+          → Block scope: let & const inside a block are hoisted in a different
+          space in memory, called "Block" section (let and const declared in
+          global are stored in "Script" section). They are block scoped as they
+          can be accessed only in the block (see inspect → scope) ("var" always
+          stored in the global object, function scope). Block scopes also follow
+          lexical scopes, these scopes are lexically present.
+          <br />
+          → Shadowing:
+          <br />
+          Redeclaring "var" shadows/overrides the previous value as they point
+          to same location in memory
+          <br />
+          var a=10; {'{ var a = 100; // inside a block }'}; → a will be changed
+          to 100
+          <br />→ "let" declared a inside block shadows "let" declared outside
+          the block, both "let" variables store different values
+          <SyntaxHighlighter language='javascript' style={docco}>
+            {`
+              let a = 10;
+              { 
+                let a = 100; 
+                console.log(a); // Prints 100
+              }
+              console.log(a); // Prints 10
+
+              // Works the same way in case of functions.
+            `}
+          </SyntaxHighlighter>
+          → Illegal shadowing: let cannot be shadowed using a var: <br />
+          let a = 10; {'{ var a = 10; }'} // only let can shadow let
+          <br />→ This is because "var" is trying to cross the boundary of its
+          scope, shadowing works only when we are within the boundary of our
+          scope. Vice versa is ok → var a = 20; {'{ let a = 10; }'},
+          <br />
+          As "var" is function scope this is ok <br />
+          let a = 10;
+          <br /> function x() {'{ var a = 100; }'}
+          <br />
+          Behaviour is for arrow function as well.
         </li>
         <li>
-          <div style={{ display: "flex", gap: "5px" }}>
+          <div style={{ display: 'flex', gap: '5px' }}>
             <b>Closures</b>:
-            <div onClick={() => setClosures((val) => !val)}>
+            <div onClick={() => setClosures(val => !val)}>
               {closures ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </div>
           </div>
@@ -209,7 +249,7 @@ export default function JSNotes() {
               returned. Closures are maintained at all depths of the scope
               chain.
               <br />
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
             function x() {
               var a = 7;
@@ -223,7 +263,7 @@ export default function JSNotes() {
             z();
             `}
               </SyntaxHighlighter>
-              setTimeout: setTimeout( function() {"{...}"}, 1000)
+              setTimeout: setTimeout( function() {'{...}'}, 1000)
               <br />
               whenever this is encountered, js stores it at some place attaches
               a timer and executes the func/puts it in call stack after the
@@ -233,7 +273,7 @@ export default function JSNotes() {
               after every second - 1, 2,3,4,5 <br />
               solution 1: for loop using "let". "let" is block scope so new copy
               of i is there passed to timeout so it works.
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
             function x() {
               for(let i=1; i<=5; i++) {
@@ -249,7 +289,7 @@ export default function JSNotes() {
               is used by reference so following prints 6,6,6,6,6 after every
               second. i has become 6 after for loop and every setTimeout is
               pointing to it:
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
             function x() {
               for(var i=1; i<=5; i++) {
@@ -264,7 +304,7 @@ export default function JSNotes() {
               Fix: using closures, we enclose it in a function, so everytime new
               value/copy of i is passed and everyone does not point to same
               place:
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
             function x() {
               for(var i=1; i<=5; i++) {
@@ -280,7 +320,7 @@ export default function JSNotes() {
             `}
               </SyntaxHighlighter>
               Advantages of closures: Function currying, setTimeout, HOC
-              (Memoize, once) , Module patterns, data hiding & encapsulation.{" "}
+              (Memoize, once) , Module patterns, data hiding & encapsulation.{' '}
               <br />
               Data hiding & encapsulation: Avoiding access of a variable from
               some other function/parts of a code. Using closure: count var is
@@ -288,7 +328,7 @@ export default function JSNotes() {
               modified using the returned func. Another advantage, we can have
               multiple counters and each will store different count.
               <br />
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
             function Counter() {
               var count = 0;
@@ -320,32 +360,32 @@ export default function JSNotes() {
         <li>
           First Class Functions: <br />
           1. Function Statement aka Function declaration: the usual way of
-          declaring functions is function statement :-- function a() {"{....}"}
+          declaring functions is function statement :-- function a() {'{....}'}
           <br />
           2. Function Expression: functions can be treated just like a value and
           can be assigned to other variables, this is a func expression :-- var
-          b = function () {"{....}"} <br />
+          b = function () {'{....}'} <br />
           Major Diff b/w func statement & exp. is hoisting. (see basics) During
           1st phase (memory alloc), in func statement map will be created and
           func definition will be copied/stored so it can be called before the
           statement but in func exp. var b will be undefined before executing
-          the line where its assigned the func so we cannot call it before.{" "}
+          the line where its assigned the func so we cannot call it before.{' '}
           <br />
-          a(); function a() {"{....}"}; → works but this doesnt → b(); var b =
-          function () {"{....}"} <br />
+          a(); function a() {'{....}'}; → works but this doesnt → b(); var b =
+          function () {'{....}'} <br />
           3. Anonymous Functions: Functions without a name, they dont have any
-          identity. ex: function () {"{...}"}. We can only use them where func
+          identity. ex: function () {'{...}'}. We can only use them where func
           are used as values (like above in a func exp.), otherwise syntax error
           as its a func statement and statements require a name. <br />
           4. Named Function expression: When an func exp. has a name. ex: var b
-          = function c() {"{....}"}. If we try to call c() in global scope it
+          = function c() {'{....}'}. If we try to call c() in global scope it
           throws error as c does not exist in global scope. ex: <br />
-          var b = function c() {"{...}"}; <br />
+          var b = function c() {'{...}'}; <br />
           c(); <br />
           5. Diff b/w parameters and arguments: <br />
           Params - local variables in the functions scope cannot be accessd
           outside, the variables which it accepts. ex: function a(param1,
-          param2) {"{...}"}; <br />
+          param2) {'{...}'}; <br />
           Arguments - The values which we pass to func when invoking it. ex:
           a(arg1, arg2); <br />
           6. First Class Functions: In js we can use func as values, pass them
@@ -362,22 +402,22 @@ export default function JSNotes() {
           and time after which to invoke the func (see inspect/source call stack
           to visualise this, after timer a func will be pushed in stack).
           <br />
-          function x(y) {"{...}"}; <br />x (function y() {"{...}"}); <br />
+          function x(y) {'{...}'}; <br />x (function y() {'{...}'}); <br />
           Every execution in js happens only from the one call stack, can also
           say single threaded where this stack is the thread. when any operation
           blocks the call stack, it is called <b>
             blocking the main thread.
-          </b>{" "}
+          </b>{' '}
           <br />
           Event Listeners: Event listeners also take up callback functions, when
           the event occurs the func is brought in the call stack and executed.
           ex: <br />
           document.getElementById("someIdGivenToADiv").addEventListener("event(click/hover)",
-          function name(params) {"{...}"}) <br />
+          function name(params) {'{...}'}) <br />
           On button click display no. of times it is clicked: count add the
           adding listener in a func (closure), inner callback stores the count
           (lexical env. /closure): <br />
-          function attachEventListener() {"{"} <br />
+          function attachEventListener() {'{'} <br />
           let count = 0; <br />
           document.getElementById("buttonId").addEventListener("click",
           console.log("Click: ", ++count)); <br />
@@ -418,7 +458,7 @@ export default function JSNotes() {
           callback queue and puts the func in the call stack. All callback func
           are pushed in callback queue waiting to be executed, event loop
           continuously checks the call stack, as soon its empty and there's
-          something in the queue to be executed it is pushed in the call stack.{" "}
+          something in the queue to be executed it is pushed in the call stack.{' '}
           <br />
           <b>fetch()</b> - This works slightly differently than other callback
           funcs. When we encounter a fetch, api call is made to passed url and
@@ -428,7 +468,7 @@ export default function JSNotes() {
           Here <b>Microtask queue</b> comes in, similar to callback queue but
           has higher priority. In case of fetch, the callback func will be
           pushed in the microtask queue and event loop picks it to be executed
-          first as soon as call stack empty (then callback queue processed).{" "}
+          first as soon as call stack empty (then callback queue processed).{' '}
           <br />
           All callback functions that come from promises are pushed in microtask
           queue, also mutation observers. everyother callback func is pushed in
@@ -453,8 +493,8 @@ export default function JSNotes() {
           major steps: 1) Parsing 2) Compilation 3) Execution. <br />
           In parsing, tokenisation (converting out js code into tokens) happens
           and there is also Syntax Parser which creates an AST (Abstract Syntax
-          tree) (Visualize AST:{" "}
-          <a href={"https://astexplorer.net/"} target="_blank">
+          tree) (Visualize AST:{' '}
+          <a href={'https://astexplorer.net/'} target='_blank'>
             https://astexplorer.net/
           </a>
           .) <br />
@@ -473,7 +513,7 @@ export default function JSNotes() {
           much it can. Execution then happens using call stack and memory heap
           (where all var and func assigned memory) inside the js engine. <br />
           Now we also have a garbage collector in there (in sync with memory
-          heap etc.) to free up unused memory. It uses an algo known as{" "}
+          heap etc.) to free up unused memory. It uses an algo known as{' '}
           <b>Mark & sweep algo.</b> We also have some optimising techniques in
           the engine, some of them are: Inlining, Inline caching, copy elision
           (read more). <br />
@@ -493,8 +533,8 @@ export default function JSNotes() {
           not empty. After 7 sec when stack empty, event loop puts it in call
           stack and then it gets executed. This is why we should not block the
           main thread/ call stack for long time. <br />a hack to block thread
-          for long time:{" "}
-          <SyntaxHighlighter language="javascript" style={docco}>
+          for long time:{' '}
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`
               let startTime = new Date().getTime();
               let endTime = startTime;
@@ -506,9 +546,9 @@ export default function JSNotes() {
           </SyntaxHighlighter>
         </li>
         <li>
-          <div style={{ display: "flex", gap: "5px" }}>
+          <div style={{ display: 'flex', gap: '5px' }}>
             Functional Programming:
-            <div onClick={() => setFuncProg((val) => !val)}>
+            <div onClick={() => setFuncProg(val => !val)}>
               {funcProg ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </div>
           </div>
@@ -520,7 +560,7 @@ export default function JSNotes() {
               array and want to generate 3 more arrays: circumference, area and
               diameter. Repeating code as below is not the correct way to do it.
               <br />
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               let radius = [3, 1, 5, 7];
               
@@ -555,7 +595,7 @@ export default function JSNotes() {
               </SyntaxHighlighter>
               Better way of improving this is to extract the computation logic
               out and keep a common function for calculations like below:
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               let radius = [3, 1, 5, 7];
 
@@ -594,7 +634,7 @@ export default function JSNotes() {
               If we want to convert the calculate func like how we call
               Array.map, in the calculate func "this" points to the array with
               which it is invoked (radius in our case) :
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               let radius = [3, 1, 5, 7];
 
@@ -627,8 +667,8 @@ export default function JSNotes() {
           Reduce: Use when we have to take all the values in an array and come
           up with a single value out of them. arr.reduce(func, initial) takes
           two arguments: callback func and initial value of accumulator <br />
-          ex: sum of elements of array: arr.reduce(function (acc, curr){" "}
-          {"{ acc = acc + curr; return acc; }"}, 0) <br />
+          ex: sum of elements of array: arr.reduce(function (acc, curr){' '}
+          {'{ acc = acc + curr; return acc; }'}, 0) <br />
           Above the callback func which we pass gets two parameters, acc:
           accumulator which is initialised to some value (0 here) and our result
           is accumulated in it. second param curr: is the current value, when
@@ -644,8 +684,8 @@ export default function JSNotes() {
           new api and so on, callback funcs can be big issue. the code grows
           horizontally (called pyramid of doom) and is highly unreadable,
           unmaintainable etc. ex: <br />
-          api1(data, function1(){" "}
-          {"{ api2(data, function2 () { api3()....so on} ) }"}) <br />
+          api1(data, function1(){' '}
+          {'{ api2(data, function2 () { api3()....so on} ) }'}) <br />
           Inversion of control: Its like we lose control of our code while using
           callbacks. Like above we gave control to api1 (when it is resolved)
           the responsibility of calling api2, this is risky and we are blindly
@@ -654,9 +694,9 @@ export default function JSNotes() {
           say api2 is critical, some paymeny api etc.)
         </li>
         <li>
-          <div style={{ display: "flex", gap: "5px" }}>
+          <div style={{ display: 'flex', gap: '5px' }}>
             <b>Promises</b>:
-            <div onClick={() => setPromise((val) => !val)}>
+            <div onClick={() => setPromise(val => !val)}>
               {promise ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </div>
           </div>
@@ -669,8 +709,8 @@ export default function JSNotes() {
               <br />
               We can use callbacks to create a flow, but as we know from above
               issues of callback this is not reliable: <br />
-              createOrder( cart, function(orderId){" "}
-              {"{ proceedToPayment(orderId); }"}) // cart = ["books", "pen",
+              createOrder( cart, function(orderId){' '}
+              {'{ proceedToPayment(orderId); }'}) // cart = ["books", "pen",
               "shoes"]; <br />
               Here we use promises to create a better and reliable flow. Our
               func will return a promise which is nothing but an empty object
@@ -681,10 +721,10 @@ export default function JSNotes() {
               function using then(), this callback func is automatically called
               after we get the data. <br />
               const promise = createOrder(cart); <br />
-              // promise → {"{ data: undefined }"} empty before we get data.{" "}
+              // promise → {'{ data: undefined }'} empty before we get data.{' '}
               <br />
-              // promise → {"{ data: orderDetails}"} after we get data. <br />
-              promise.then(function (orderId) {"{ proceedToPayment(orderId); }"}
+              // promise → {'{ data: orderDetails}'} after we get data. <br />
+              promise.then(function (orderId) {'{ proceedToPayment(orderId); }'}
               ); <br />
               So there is big difference b/w the callback way and the promise
               way: 1st one we are passing the callback func to another func and
@@ -703,13 +743,13 @@ export default function JSNotes() {
               state. If failed then "rejected state", it is guaranteed to be in
               these 3 states. (refer mozilla docs). Promise object is immutable,
               we cannot change any value in object. <br />
-              Promise chaininig to resolve callback hell/ pyramid of doom:{" "}
+              Promise chaininig to resolve callback hell/ pyramid of doom:{' '}
               <br />
               We can add multiple .then() and chain to add many callback funcs.
               it solves the issue of passing multiple callback funcs (see
               callback issues) ex: <br />
               createOrder(cart).then(data =V return payment(data) ).then(data =V
-              return updateWallet(data)).then(data =V return showSummary(data)){" "}
+              return updateWallet(data)).then(data =V return showSummary(data)){' '}
               <br />
               Some things in chaining: When multiple .then chained, always
               return anything (like above) that need to be used in the next then
@@ -735,8 +775,8 @@ export default function JSNotes() {
               function to catch() which is chained with then and receiced the
               error object.
               <br />
-              const pr = new Promise(function (resolve, reject) {"{ }"})
-              <SyntaxHighlighter language="javascript" style={docco}>
+              const pr = new Promise(function (resolve, reject) {'{ }'})
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               // This is consumer as we are consuming the promise
               const promise = createOrder(cart) // cart =["shoes" , "pant",.....]
@@ -779,7 +819,7 @@ export default function JSNotes() {
               rejected, whole collection of promises). If p2 fails error thrown
               after 1s, p1 & p3 api calls made (the promise) are not cancelled.
               As soon as error encountered, promise.all() fails, it does not
-              wait for other api calls made regardless of their success/failure.{" "}
+              wait for other api calls made regardless of their success/failure.{' '}
               <br />
               2. Promise.allSettled([p1, p2, p3]): Same as above in case every
               promise is succesfull. But if any promise fails, it still waits
@@ -790,7 +830,7 @@ export default function JSNotes() {
               promise which settles the earliest is returned whether it is a
               success or failure. ex: p2 resolves in 1s, returned value: val2
               else returns error if it is rejected. Other promise doesnt matter
-              what their result is, the one which settles first is returned.{" "}
+              what their result is, the one which settles first is returned.{' '}
               <br />
               4. Promise.any([p1,p2,p3]): Same as race but it waits for a
               succesful promise, if the first promise settled is rejected then
@@ -801,27 +841,27 @@ export default function JSNotes() {
               the array of errors in catch section → err.errors.
               <br />
               All the four above return a promise, attach a callback func using
-              then to see result. ex : Promise.all([p1, p2, p3]).then((res) =V{" "}
-              {"{...}"})
+              then to see result. ex : Promise.all([p1, p2, p3]).then((res) =V{' '}
+              {'{...}'})
             </>
           )}
         </li>
         <li>
-          <div style={{ display: "flex", gap: "5px" }}>
+          <div style={{ display: 'flex', gap: '5px' }}>
             <b>Async, await</b>:
-            <div onClick={() => setAsynAwait((val) => !val)}>
+            <div onClick={() => setAsynAwait(val => !val)}>
               {asynAwait ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </div>
           </div>
           {asynAwait && (
             <>
               Async: Keyword used to create an async function ex: async function
-              getData() {"{...}"}. Async func always returns promise, either we
+              getData() {'{...}'}. Async func always returns promise, either we
               create a promise and return from it or if we return a string/int
               the func will wrap the value in a promise and return. <br />
               Async and await combo is used to handle promises. Earlier way of
               handling promises: <br />
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               const p = new Promise((resolve, reject) => {
                 resolve("Promise resolved");
@@ -836,7 +876,7 @@ export default function JSNotes() {
             `}
               </SyntaxHighlighter>
               Using async await for the same:
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               const p = new Promise((resolve, reject) => {
                 resolve("Promise resolved");
@@ -868,7 +908,7 @@ export default function JSNotes() {
               immediately after 10s as they are the same promise and will be
               resolved after 10s, we will get 4 logs immediately after 10s.
               <br />
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               const p = new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -894,7 +934,7 @@ export default function JSNotes() {
               both will be resolved after 10s. But if we swap times p1: 5s and
               p2: 10s, after 5s, logs after p1 get printed and more 5s (total
               10s), logs after p2 get printed.
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               const p1 = new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -939,12 +979,12 @@ export default function JSNotes() {
               const data = await fetch(); // data has response object
               <br />
               const jsonValue = await data.json(); <br />
-              Error handling can be done through try catch block: try{" "}
-              {"{ const data = await fetch(...); }"} catch(err)
-              {"{console.log(err)}"} <br />
+              Error handling can be done through try catch block: try{' '}
+              {'{ const data = await fetch(...); }'} catch(err)
+              {'{console.log(err)}'} <br />
               Old way of handling can also be don as async func returns a
               promise: <br />
-              async function getData() {"{....}"}; <br />
+              async function getData() {'{....}'}; <br />
               getData().catch(err =V console.log(err)); <br />
               Async await is just a <b>syntactic sugar</b> over then and catch,
               behind the scenes it uses then only. improves readability and the
@@ -954,20 +994,20 @@ export default function JSNotes() {
           )}
         </li>
         <li>
-          <div style={{ display: "flex", gap: "5px" }}>
+          <div style={{ display: 'flex', gap: '5px' }}>
             <b>this keyword</b>:
-            <div onClick={() => setThisK((val) => !val)}>
+            <div onClick={() => setThisK(val => !val)}>
               {thisK ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </div>
           </div>
           {thisK && (
             <>
               In global space: "this" will be equal to the global object always
-              in the global space/scope. in browsers the object is Window.{" "}
+              in the global space/scope. in browsers the object is Window.{' '}
               <br />
               In a function: If it is not strict mode then it is equal to he
               global object, in strict mode it will be undefined. <br />
-              function x() {"{ console.log(this)}"}; <br />
+              function x() {'{ console.log(this)}'}; <br />
               x(); <br />
               The behaviour is because of a phenomenon known as "this
               substitution": If the value of "this" keyword is undefined or null
@@ -984,7 +1024,7 @@ export default function JSNotes() {
               method. Like below, x is a method. (just a lingo, it is a function
               only)
               <br />
-              let a = {"{ a: 10, x: function () { console.log(this) } }"};{" "}
+              let a = {'{ a: 10, x: function () { console.log(this) } }'};{' '}
               <br />
               obj.x(); <br />
               This will print the object itself, when called like above, this
@@ -993,7 +1033,7 @@ export default function JSNotes() {
               Call, bind, apply: When we have to share methods, like there is
               func (method) in one object and we need to use it on another
               object. Ex: <br />
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               const person1 = {
                 name: "Aditya",
@@ -1019,7 +1059,7 @@ export default function JSNotes() {
               If our function accepts some parameters, we can pass them as
               subsequent arguments after passing the reference object. also we
               can keep the method outside. Ex:
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               const person1 = {
                 name: "Aditya", 
@@ -1053,7 +1093,7 @@ export default function JSNotes() {
               Polyfill or bind: If a browser does not support a function then we
               need to have/implement some fallback func (our own) to use in
               place of the unsupported func, this is called polyfills. For bind:
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
                   let person1 = {
                     firstName: "Aditya",
@@ -1083,12 +1123,12 @@ export default function JSNotes() {
               <b>In arrow functions</b>: this takes the value from its lexical
               env, arrow functions do not have their own "this" and dont have
               the concept of "this". In the person1 ex, if we replace printName
-              with: printName: () =V {"{ console.log(this) }"}
+              with: printName: () =V {'{ console.log(this) }'}
               , will not work, instead global object will be printed. below the
               object will get printed as the arrow function is inside another
               fun ( its enclosing lexical context ), just behaves like above
               ex.: <br />
-              <SyntaxHighlighter language="javascript" style={docco}>
+              <SyntaxHighlighter language='javascript' style={docco}>
                 {`
               const person1 = {
                 name: "Aditya",
@@ -1122,7 +1162,7 @@ export default function JSNotes() {
           setTimeout func will execute after that time. But if it is less than
           300ms b/w key strokes then we have to clear the timer and reset it.
           <br />
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`
               const getData = () => {...};
 
@@ -1158,7 +1198,7 @@ export default function JSNotes() {
           a closure having a var flag, if true then we run func and set flag to
           false and switch back to true only after delay time. We handle args
           and call func the below way and not directly ( func() ).
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`
               const expensiveFunc = () => {...};
 
@@ -1230,7 +1270,7 @@ export default function JSNotes() {
           events on each item. Instead of attaching a click event listener to
           each item, you can attach a single event listener to the parent
           element.
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`
               document.getElementById('parent').addEventListener('click', function(event) {
                 if (event.target && event.target.matches('li.child')) {
@@ -1261,5 +1301,5 @@ export default function JSNotes() {
         </li>
       </ul>
     </Content>
-  );
+  )
 }

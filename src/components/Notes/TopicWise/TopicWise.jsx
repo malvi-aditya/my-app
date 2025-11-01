@@ -1,59 +1,50 @@
-import { useState } from "react";
-import { styled } from "@mui/material/styles";
-import JSNotes from "./JSNotes";
-import ReactNotes from "./ReactNotes";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import CSSNotes from "./CSSNotes";
-import GitNotes from "./GitNotes";
-import InterviewNotes from "./InterviewNotes";
+import { useState } from 'react'
+import { styled } from '@mui/material/styles'
+import ReactNotes from './ReactNotes'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+import CSSNotes from './CSSNotes'
+import GitNotes from './GitNotes'
+import InterviewNotes from './InterviewNotes'
 
-const ListItem = styled("div")(() => ({
-  display: "flex",
-  gap: "5px",
-}));
+const ListItem = styled('div')(() => ({
+  display: 'flex',
+  gap: '5px'
+}))
 
-export default function Notes() {
-  const [js, setJS] = useState(false);
-  const [react, setReact] = useState(false);
-  const [css, setCSS] = useState(false);
-  const [git, setGit] = useState(false);
-  const [interview, setInterview] = useState(false);
+export default function TopicWise () {
+  const [react, setReact] = useState(false)
+  const [css, setCSS] = useState(false)
+  const [git, setGit] = useState(false)
+  const [interview, setInterview] = useState(false)
 
   return (
     <>
       <>
         <ListItem>
-          <b>JavaScript :</b>
-          <div onClick={() => setJS((val) => !val)}>
-            {js ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </div>
-        </ListItem>
-        {js && <JSNotes />}
-        <ListItem>
           <b>React:</b>
-          <div onClick={() => setReact((val) => !val)}>
+          <div onClick={() => setReact(val => !val)}>
             {react ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </div>
         </ListItem>
         {react && <ReactNotes />}
         <ListItem>
           <b>CSS:</b>
-          <div onClick={() => setCSS((val) => !val)}>
+          <div onClick={() => setCSS(val => !val)}>
             {css ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </div>
         </ListItem>
         {css && <CSSNotes />}
         <ListItem>
           <b>Git:</b>
-          <div onClick={() => setGit((val) => !val)}>
+          <div onClick={() => setGit(val => !val)}>
             {git ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </div>
         </ListItem>
         {git && <GitNotes />}
         <ListItem>
           <b>Resume, Interview etc:</b>
-          <div onClick={() => setInterview((val) => !val)}>
+          <div onClick={() => setInterview(val => !val)}>
             {interview ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </div>
         </ListItem>
@@ -79,7 +70,7 @@ export default function Notes() {
         preflight request is made before actual api call is made. Browser first
         makes this call (also called OPTIONS call), A will make this call and B
         will validate the call. If valid, B responds back to A with additonal
-        headers so A knows it is safe and then the actual API call is made.{" "}
+        headers so A knows it is safe and then the actual API call is made.{' '}
         <br />
         One of the common header is: Access-Control-Allow-Origin which can have
         value: * meaning any domain can access this (public apis). we can also
@@ -95,5 +86,5 @@ export default function Notes() {
         <br />
       </>
     </>
-  );
+  )
 }
