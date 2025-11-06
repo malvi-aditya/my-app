@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { styled } from '@mui/material/styles'
-import ReactNotes from './ReactNotes'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import CSSNotes from './CSSNotes'
 import GitNotes from './GitNotes'
 import InterviewNotes from './InterviewNotes'
 
@@ -13,28 +11,12 @@ const ListItem = styled('div')(() => ({
 }))
 
 export default function TopicWise () {
-  const [react, setReact] = useState(false)
-  const [css, setCSS] = useState(false)
   const [git, setGit] = useState(false)
   const [interview, setInterview] = useState(false)
 
   return (
     <>
       <>
-        <ListItem>
-          <b>React:</b>
-          <div onClick={() => setReact(val => !val)}>
-            {react ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </div>
-        </ListItem>
-        {react && <ReactNotes />}
-        <ListItem>
-          <b>CSS:</b>
-          <div onClick={() => setCSS(val => !val)}>
-            {css ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </div>
-        </ListItem>
-        {css && <CSSNotes />}
         <ListItem>
           <b>Git:</b>
           <div onClick={() => setGit(val => !val)}>

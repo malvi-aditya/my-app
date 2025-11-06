@@ -5,10 +5,12 @@ import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
 import ReactCourse from './Courses/ReactCourse/ReactCourse'
 import JSNotes from './TopicWise/JSNotes'
+import CSSNotes from './TopicWise/CSSNotes'
 
 const tabConfig = [
   { id: 0, name: 'Javascript' },
-  { id: 1, name: 'React Course' }
+  { id: 1, name: 'React Course' },
+  { id: 2, name: 'CSS' }
 ]
 
 const Root = styled('div')(() => ({
@@ -53,7 +55,7 @@ export default function Notes () {
         </Tabs>
       </Box>
       <TabContainer ref={tabContentRef}>
-        {tab === 0 ? <JSNotes /> : <ReactCourse />}
+        {tab === 0 ? <JSNotes /> : tab === 1 ? <ReactCourse /> : <CSSNotes />}
       </TabContainer>
     </Root>
   )
