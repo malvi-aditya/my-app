@@ -7,12 +7,14 @@ import ReactCourse from './Courses/ReactCourse/ReactCourse'
 import JSNotes from './TopicWise/JSNotes'
 import CSSNotes from './TopicWise/CSSNotes'
 import ReactNotes from './TopicWise/ReactNotes'
+import { General } from './TopicWise/General'
 
 const tabConfig = [
   { id: 0, name: 'Javascript' },
   { id: 1, name: 'React Course' },
   { id: 2, name: 'CSS' },
-  { id: 3, name: 'React' }
+  { id: 3, name: 'React' },
+  { id: 4, name: 'General' }
 ]
 
 const Root = styled('div')(() => ({
@@ -63,8 +65,10 @@ export default function Notes () {
           <ReactCourse />
         ) : tab === 2 ? (
           <CSSNotes />
-        ) : (
+        ) : tab === 3 ? (
           <ReactNotes />
+        ) : (
+          <General />
         )}
       </TabContainer>
     </Root>
