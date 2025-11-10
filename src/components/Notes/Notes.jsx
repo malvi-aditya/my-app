@@ -1,9 +1,21 @@
-import { useState, useRef, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
-import Resources from './Resources'
+import ReactCourse from './Courses/ReactCourse/ReactCourse'
+import JSNotes from './TopicWise/JSNotes'
+import CSSNotes from './TopicWise/CSSNotes'
+import ReactNotes from './TopicWise/ReactNotes'
+import { General } from './TopicWise/General'
+
+const tabConfig = [
+  { id: 0, name: 'Javascript' },
+  { id: 1, name: 'React Course' },
+  { id: 2, name: 'CSS' },
+  { id: 3, name: 'React' },
+  { id: 4, name: 'General' }
+]
 
 const Root = styled('div')(() => ({
   marginTop: '16px',
@@ -16,9 +28,7 @@ const TabContainer = styled('div')(() => ({
   overflowY: 'auto'
 }))
 
-const tabConfig = [{ id: 0, name: 'Study Material' }]
-
-export default function Home () {
+export default function Notes () {
   const [tab, setTab] = useState(0)
   const tabContentRef = useRef(null)
 
@@ -36,7 +46,6 @@ export default function Home () {
 
   return (
     <Root>
-      <h3>Hey there!</h3>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={tab}
@@ -49,9 +58,18 @@ export default function Home () {
           ))}
         </Tabs>
       </Box>
-
       <TabContainer ref={tabContentRef}>
-        {tab === 0 ? <Resources /> : <></>}
+        {tab === 0 ? (
+          <JSNotes />
+        ) : tab === 1 ? (
+          <ReactCourse />
+        ) : tab === 2 ? (
+          <CSSNotes />
+        ) : tab === 3 ? (
+          <ReactNotes />
+        ) : (
+          <General />
+        )}
       </TabContainer>
     </Root>
   )

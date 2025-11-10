@@ -1,10 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
-export default function Navbar() {
+export default function Navbar () {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <Link className="navbar-brand" to="/">
+    <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+      <Link className='navbar-brand' to='/'>
         Home
+      </Link>
+      <Link className='navbar-brand' to='/notes'>
+        Notes
+      </Link>
+      <Link className='navbar-brand' to='/experiments'>
+        Experiments
+      </Link>
+      <Link className='navbar-brand' to='/playground'>
+        Playground
       </Link>
       {/* <button
         className="navbar-toggler"
@@ -25,5 +34,5 @@ export default function Navbar() {
         </div>
       </div> */}
     </nav>
-  );
+  )
 }

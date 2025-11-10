@@ -1,16 +1,16 @@
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
-export default function Ep3and4and5() {
+export default function Ep3and4and5 () {
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <h6>Episode 3:</h6>
       <ul>
         <li>
           Creating npm scripts: In the scripts key in package.json, we can add
           scripts that we want to run, add a key value pair with the key being
           the name of script and value being the command. Ex start script:
-          "start": "parcel index.html", this will "npx parcel index.html".{" "}
+          "start": "parcel index.html", this will "npx parcel index.html".{' '}
           <br />
           → Generally checking package.json in an existing project will help in
           understanding how to build, its commands etc. Now "npm run
@@ -52,7 +52,7 @@ export default function Ep3and4and5() {
           introducing this syntax and not React.
         </li>
         <li>
-          <b>Babel</b>: Parcel/Webpack are just package managers, the{" "}
+          <b>Babel</b>: Parcel/Webpack are just package managers, the{' '}
           <b>transpilation</b> of JSX is done by <b>Babel</b>. It converts JSX
           into code that React/JS can understand. The JSX we have is converted
           to React.createElement and further flow is same. Behind the scenes,
@@ -74,10 +74,10 @@ export default function Ep3and4and5() {
           new way. <br />→ Functional component: Its just a JS function (name
           should begin with capital) which returns a piece of JSX/React element.
           ex:
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`const Button = () => { return ( <>...</>) }`}
           </SyntaxHighlighter>
-          We render functional components by simply this syntax: {`<Button />`}{" "}
+          We render functional components by simply this syntax: {`<Button />`}{' '}
           or {`<Button></Button>`}. <br />→ Browser does not care what
           components are created, how they are nested etc. in the end everything
           is transpiled into React elements and then the HTML elements (DOM
@@ -85,7 +85,7 @@ export default function Ep3and4and5() {
           called <b>component composition</b>. We can write any JS expression,
           variables, inside JSX using curly brakcets {`{ ..here }`}, meaning we
           can also render any functional components in it ex:
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`
               const parent = <> { Button() } </>
 
@@ -102,7 +102,7 @@ export default function Ep3and4and5() {
           executed in some JSX. Then some malicious data/code is prone to run on
           our browser, this is known as <b>Cross Site Scripting</b>. As it can
           run on browser, it can access localStorage, cookies etc.
-          <SyntaxHighlighter language="javascript" style={docco}>
+          <SyntaxHighlighter language='javascript' style={docco}>
             {`
               const data = fetch(); // data is malicious
 
@@ -129,7 +129,7 @@ export default function Ep3and4and5() {
           Contact info, Linkouts etc. Top level component can be App that
           contains our whole app. <br />→ Now as we are going to show a lot of
           cards showing restaurant details, we build a general card component
-          and render it multiple times with different restaurant info using{" "}
+          and render it multiple times with different restaurant info using{' '}
           <b>props</b> and display in the grid format, making our code modular
           and reusable. <br /> → Components are just functions and we make
           functions to reuse certain piece of code, Passing props to a component
@@ -148,7 +148,7 @@ export default function Ep3and4and5() {
           we say that our UI is driven by data/config backend data. <br />
           → We should be able to design API response JSON and understand what we
           need to drive our UI, what all data we need to drive and build the UI.
-          Config driven UIs are dynamic and are more preffered. <br />
+          Config driven UIs are dynamic and are more preferred. <br />
           All images used in our app will be in a cdn and we fetch it from there
           using the link. <br />
           <b>Imp:</b> <br />
@@ -169,7 +169,7 @@ export default function Ep3and4and5() {
         <li>
           Everything that we do in React can be done by plain HTML, CSS, JS. But
           we use libraries like these to make our life easy, build large apps
-          with lesser effort, optimizations, strong functionalites like hooks.
+          with lesser effort, optimizations, strong functionalities like hooks.
         </li>
         <li>
           First practice: Have multiple files, a folder structure to maintain/
@@ -228,5 +228,5 @@ export default function Ep3and4and5() {
         </li>
       </ul>
     </div>
-  );
+  )
 }
