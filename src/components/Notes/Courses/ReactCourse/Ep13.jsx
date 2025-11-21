@@ -43,7 +43,7 @@ function Ep13 () {
           Writing test cases should be a part of the development process.
         </li>
         <li>
-          Types og libraries for Testing in React:
+          Types of libraries for Testing in React:
           <br />
           → Jest: A popular testing framework for JavaScript, developed by
           Facebook. It provides a simple and efficient way to write and run
@@ -63,6 +63,64 @@ function Ep13 () {
           encouraging best practices for writing maintainable tests. It provides
           utilities to render components, simulate user interactions, and query
           the DOM. Also, it uses <b>Jest</b> behind the scenes.
+          <br />
+          Steps to install:
+          <br />
+          <code>npm install --save-dev @testing-library/react</code>
+          <br />
+          Jest comes pre-installed with CRA, if not:
+          <br />
+          <code>npm install --save-dev jest</code>
+          <br />
+          Babel dependencies:
+          <br />
+          <code>
+            npm install --save-dev babel-jest @babel/core @babel/preset-env
+          </code>
+          <br />
+          Babel config (babel.config.cjs):
+          <br />
+          <code>
+            module.exports = {'{'} presets: [['@babel/preset-env', {'{'}{' '}
+            targets:
+            {'{'} node: 'current' {'}'} {'}'} ], '@babel/preset-react'] {'}'} ;
+          </code>
+          install jsdom:
+          <br />
+          <code>npm install --save-dev jest-environment-jsdom</code>
+          <br />
+          Setup Jest config (jest.config.cjs)
+        </li>
+        <li>
+          Our bundler (like Webpack, parcel) already has its own babel config
+          and uses babel. Now, we have added extra babel config for Jest to
+          understand JSX. It will get confused if we add this babel config, so
+          we need to tell it to ignore this babel config for its own build
+          process. For that, we add another config file (.parcelrc if parcel) to
+          ignore the internal babel config and use the babel config we have
+          created.
+          <br />
+          <b>
+            Using Vite, we do not run into such issues. (Only in Webpack,
+            Parcel)
+          </b>
+        </li>
+        <li>
+          jsdom: Jest runs in a Node.js environment by default, which does not
+          have a DOM. jsdom is a JavaScript implementation of the DOM and HTML
+          standards, which allows Jest to simulate a browser-like environment.
+          This is important for testing React components, as they often rely on
+          DOM APIs. Our test cases do not run in the browser, they will need an
+          environment that simulates the browser environment. It is not a
+          browser but like a browser, mimic browser and give its features
+          (browser APIs etc).
+          <br />
+          To use jsdom with Jest, we need to install it:
+          <br />
+          <code>npm install --save-dev jest-environment-jsdom</code>
+          <br />
+          Then, we need to configure Jest to use jsdom as the test environment.
+          This can be done in the Jest config file (jest.config.cjs)
         </li>
       </ul>
     </>
