@@ -233,9 +233,14 @@ function Ep13 () {
               test('renders Ep13 component and checks for content', () => {
                 render(<Ep13 />)
 
-                // Check if a specific text is present
+                // Check if a specific text is present, here we have passed a regex to match text
                 const linkElement = screen.getByText(/Types of Testing:/i)
                 expect(linkElement).toBeInTheDocument()
+
+
+                // Check if a specific text is present, here we have passed exact text to match
+                // const linkElement = screen.getByText("Types of Testing")
+                // expect(linkElement).toBeInTheDocument()
               })
             `}
           </SyntaxHighlighter>
@@ -381,6 +386,124 @@ function Ep13 () {
           </SyntaxHighlighter>
           → Here, we are using it() to define a test case that checks the sum of
           two numbers. The functionality is the same as using test().
+        </li>
+        <li>
+          In a test if we render a component which has useSelector (Redux) and
+          useDispatch hooks, we will get an error as these hooks need a Redux
+          store to work with. So, we need to wrap our component with a Redux
+          Provider and pass the store to it. This way, the component will have
+          access to the Redux store during testing. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen } from '@testing-library/react'
+              import { Provider } from 'react-redux'
+              import configureStore from 'redux-mock-store'
+              import MyComponent from '../MyComponent'
+
+
+              // config of our store will depend on our app's redux store structure, in a different file usually
+              // Generally, we import the actual store from our app, but here we are creating a mock store for testing
+              const mockStore = configureStore([])
+              const store = mockStore({ /* initial state */ })
+
+              test('renders MyComponent with Redux store', () => {
+                render(
+                  <Provider store={store}>
+                    <MyComponent />
+                  </Provider>
+                )
+
+                // Test logic
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we are using redux-mock-store to create a mock Redux store
+          with an initial state. We then wrap MyComponent with the Provider and
+          pass the mock store to it during rendering. This allows MyComponent to
+          use useSelector and useDispatch hooks without errors during testing.
+        </li>
+        <li>
+          If we have used Link from react-router-dom in our component, we will
+          get an error while testing as Link needs a Router context to work
+          with. So, we need to wrap our component with a Router (MemoryRouter
+          for testing) to provide the necessary context. Link component comes
+          from react-router-dom and it is not a normal anchor tag/HTML/JSX. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen } from '@testing-library/react'
+              import { MemoryRouter } from 'react-router-dom'
+              import MyComponent from '../MyComponent'
+
+              test('renders MyComponent with Router', () => {
+                render(
+                  <MemoryRouter>
+                    <MyComponent />
+                  </MemoryRouter>
+                )
+
+                // Test logic
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we are wrapping MyComponent with MemoryRouter during
+          rendering. This provides the necessary Router context for Link
+          components to function properly during testing.
+        </li>
+        <li>
+          Simulate a click event on a button and check if a function is called,
+          fireEvent from testing library is used for simulating events:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen, fireEvent } from '@testing-library/react'
+              import MyComponent from '../MyComponent'
+
+              test('calls function on button click', () => {
+                const mockFunction = jest.fn()
+
+                render(<MyComponent onClick={mockFunction} />)
+
+                const button = screen.getByRole('button', { name: /Click Me/i })
+                fireEvent.click(button)
+
+                expect(mockFunction).toHaveBeenCalledTimes(1)
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we create a mock function using jest.fn() and pass it as a
+          prop to MyComponent. We then simulate a click event on the button and
+          assert that the mock function was called once.
+        </li>
+        <li>
+          To test components that receives props, we can simply pass the
+          required props when rendering the component in the test case. We mock
+          our props/data. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen } from '@testing-library/react'
+              import MyComponent from '../MyComponent'
+
+              test('renders MyComponent with props', () => {
+                const props = {
+                  title: 'Test Title',
+                  description: 'Test Description'
+                }
+
+                render(<MyComponent {...props} />)
+
+                // Or depending on how props are defined in component 
+                // render(<MyComponent title="Test Title" description="Test Description" />)
+
+                const titleElement = screen.getByText(/Test Title/i)
+                const descriptionElement = screen.getByText(/Test Description/i)
+
+                expect(titleElement).toBeInTheDocument()
+                expect(descriptionElement).toBeInTheDocument()
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we define the props object with the required props and pass it
+          to MyComponent during rendering. We then assert that the elements with
+          the provided prop values are present in the document.
         </li>
       </ul>
     </>
