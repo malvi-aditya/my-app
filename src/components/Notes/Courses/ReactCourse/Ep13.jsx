@@ -1,3 +1,5 @@
+import SyntaxHighlighter from 'react-syntax-highlighter'
+
 function Ep13 () {
   return (
     <>
@@ -66,30 +68,58 @@ function Ep13 () {
           <br />
           Steps to install:
           <br />
+          1. Install testing library:
+          <br />
           <code>npm install --save-dev @testing-library/react</code>
           <br />
-          Jest comes pre-installed with CRA, if not:
+          2. Jest comes pre-installed with CRA, if not:
           <br />
           <code>npm install --save-dev jest</code>
           <br />
-          Babel dependencies:
+          3. Install Babel dependencies:
           <br />
           <code>
             npm install --save-dev babel-jest @babel/core @babel/preset-env
           </code>
           <br />
-          Babel config (babel.config.cjs):
+          4. Configure babel, Babel config (babel.config.cjs):
           <br />
           <code>
             module.exports = {'{'} presets: [['@babel/preset-env', {'{'}{' '}
             targets:
             {'{'} node: 'current' {'}'} {'}'} ], '@babel/preset-react'] {'}'} ;
           </code>
-          install jsdom:
+          <br />
+          5. Setup Jest config (jest.config.cjs)
+          <br />
+          6. Install jsdom:
           <br />
           <code>npm install --save-dev jest-environment-jsdom</code>
           <br />
-          Setup Jest config (jest.config.cjs)
+          7. Install testing-library/jest-dom for custom matchers
+          (toBeInTheDocument etc):
+          <br />
+          <code>npm install --save-dev @testing-library/jest-dom</code>
+          <br />
+          8. Install @babel/preset-react for enabling JSX in test files:
+          <br />
+          <code>npm install --save-dev @babel/preset-react</code>
+          <br />
+          9. Update babel config to include this above preset.
+        </li>
+        <li>
+          Quick explanation of an issue where babel config .js caused issue and
+          changing extension to .cjs fixed it:
+          <br />→ Our project has: "type": "module" in package.json. This means
+          Node treats all .js files as ES modules, not CommonJS. But our Babel
+          config was written in CommonJS syntax: module.exports = {`{ ... }`}
+          This syntax is not allowed inside an ES module, so Node throws an
+          error.
+          <br />→ ✅ Why renaming to babel.config.cjs fixed it: Node treats:
+          *.js → ES modules (because "type": "module") *.cjs → CommonJS modules
+          always, no matter what So when we renamed to: babel.config.cjs Node
+          said: “Okay, this is CommonJS, so module.exports is allowed.” …and
+          everything worked.
         </li>
         <li>
           Our bundler (like Webpack, parcel) already has its own babel config
@@ -121,6 +151,236 @@ function Ep13 () {
           <br />
           Then, we need to configure Jest to use jsdom as the test environment.
           This can be done in the Jest config file (jest.config.cjs)
+        </li>
+        <li>
+          When we run jest, it will look for test files with extensions like
+          .test.js, .spec.js etc. We can also configure jest to look for other
+          extensions in the config file. Ex: testMatch:{' '}
+          {
+            '**/__tests__/**/*.?([mc])[jt]s?(x), **/?(*.)+(spec|test).?([mc])[jt]s?(x)'
+          }
+          The above jest regex will look for test files in __tests__ folder and
+          also any files with .spec.js, .test.js, .spec.ts, .test.ts extensions.
+          <br />
+          We can also add a setup file that will be executed before each test
+          file. This is useful for setting up global configurations or mocking
+          certain functionalities.
+          <br />
+          __ is known as dunder (double underscore), used in many places in
+          programming.
+        </li>
+        <li>
+          How we write a simple JavaScript test case:
+          <br />
+          → We create a test file with .test.js extension.
+          <br />
+          → We write a test case using the test() or it() function provided by
+          Jest. It takes two arguments: a string description of the test case
+          and a callback function that contains the actual test logic.
+          <br />→ Inside the callback function, we use assertions to verify the
+          expected behavior of the code being tested. Jest provides various
+          assertion methods like toBe(), toEqual(), toContain(), etc. Ex:
+          Testing a basic sum function: sum.js:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              export const sum = (a, b) => {
+                return a + b
+              }
+            `}
+          </SyntaxHighlighter>
+          sum.test.js:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { sum } from '../TestComponents/sum'
+
+              test('Sum function should calculate sum of two function', () => {
+                const res = sum(2, 3)
+
+                // Assertion
+                expect(res).toBe(5)
+              })        
+            `}
+          </SyntaxHighlighter>
+          → Empty test case will pass by default, like if we do not have any
+          assertions or code inside the test case. But we should always have
+          some assertions to verify the expected behavior.
+        </li>
+        <li>
+          How to write a React component test case:
+          <br />
+          → We create a test file with .test.js extension.
+          <br />
+          → We import the necessary modules from React Testing Library and the
+          component to be tested.
+          <br />
+          → We use the render() function from React Testing Library to render
+          the component in a virtual DOM.
+          <br />
+          → We use various query methods provided by React Testing Library to
+          select elements from the rendered component. Ex: getByText(),
+          getByRole() etc.
+          <br />
+          → We simulate user interactions using fireEvent or userEvent utilities
+          provided by React Testing Library.
+          <br />→ We first have to render the component to the jsdom, done using
+          render keyword in the test. We use assertions to verify the expected
+          behavior of the component based on the user interactions. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen, fireEvent } from '@testing-library/react'
+              import Ep13 from '../Notes/Courses/ReactCourse/Ep13'
+
+              test('renders Ep13 component and checks for content', () => {
+                render(<Ep13 />)
+
+                // Check if a specific text is present
+                const linkElement = screen.getByText(/Types of Testing:/i)
+                expect(linkElement).toBeInTheDocument()
+              })
+            `}
+          </SyntaxHighlighter>
+          → Lets say we have to check if a component got rendered properly,
+          visually to our eyes it looks fine, like something got rendered, but
+          how to check it in test case.
+          <br /> → We have a method called screen ( an object coming from
+          testing library ) which has multiple methods to query the DOM. We get
+          access to the elements rendered onto jsdom through screen. Ex:
+          getByText, getByRole etc, are some methods given by screen to perform
+          some actions on elements. We can use these methods to find elements in
+          the rendered component and then use assertions to verify their
+          presence or content. "toBeInTheDocument" is one such assertion that
+          checks if the element is present in the DOM.
+          <br /> → If we do not have jsx enabled in our test file, we will get
+          an error while rendering/testing the component. So, we need to have
+          babel config set up properly for our test files. Installing
+          @babel/preset-react and including it in our babel config will make JSX
+          work in our test files. babel/preset-react transpiles the JSX in the
+          test file to HTML/DOM. runtime: 'automatic' in the config, is a new
+          way of using JSX without importing React in every file.
+          <br />→ @testing-library/jest-dom is another library/package that
+          provides custom matchers for Jest to use with the DOM. Ex:
+          toBeInTheDocument() is one such matcher that comes from this library.
+          It provides more readable assertions for testing DOM elements.
+          <br />
+          → getByRole is preferred over getByText as it is more accessible and
+          simulates how users interact with the app using assistive
+          technologies. Testing library have defined several roles for different
+          elements, like button role for button element, heading role for h1,h2
+          etc. So we can use getByRole to find elements based on their roles. To
+          get a heading:
+          <br />
+          <SyntaxHighlighter language='javascript'>
+            {`
+              const heading = screen.getByRole('heading', { name: /Episode 13:/i })
+
+              // If we have a button with text 'Submit':  
+              const button = screen.getByRole('button', { name: /Submit/i })
+            `}
+          </SyntaxHighlighter>
+          → Here, we are looking for an element with the role of 'heading' and
+          the name (text content) matching 'Episode 13:'. This is more robust
+          than using getByText, as it ensures we are selecting the correct
+          element based on its semantic role.
+          <br />
+          → To get all headings in the component ( getAll... in general returns
+          an array of all matching elements):
+          <br />
+          <SyntaxHighlighter language='javascript'>
+            {`
+              // Querying
+              const headings = screen.getAllByRole('heading')
+
+              console.log(headings) // This will log an array of all heading elements (React objects)
+            `}
+          </SyntaxHighlighter>
+          → This will return an array of all elements with the role of 'heading'
+          in the rendered component. getBy... will be returning a single
+          element, whereas getAllBy... will return an array of all matching
+          elements. If there are multiple items for a role (lets say multiple
+          headings), and we use getByRole, it will throw an error as it expects
+          only one element to be found.
+          <br /> → These functions return React elements (the object), so we can
+          use various assertions on them. The same React element which is in
+          Virtual DOM and created using React.createElement(). (Basics of React)
+          So, headings is a React element here. After render(), we have access
+          to these elements in jsdom through screen. Use console.log to see the
+          output.
+        </li>
+        <li>
+          describe() block: It is used to group related test cases together. It
+          helps in organizing tests and provides a way to structure the test
+          suite. We can have multiple test cases inside a describe block. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              describe('Sum function tests', () => {
+
+                test('Sum of positive numbers', () => {
+                  // Test logic
+                })
+
+                test('Sum of negative numbers', () => {
+                  // Test logic
+                })
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we have grouped two test cases related to the sum function
+          inside a describe block named 'Sum function tests'. This helps in
+          better organization and readability of the test suite.
+          <br /> → describe blocks can also be nested to create a hierarchical
+          structure for tests. Multiple describe blocks can be used to further
+          organize tests into sub-groups. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              describe('Math functions', () => {
+
+                describe('Sum function tests', () => {
+
+                  test('Sum of positive numbers', () => {
+                    // Test logic
+                  })
+
+                  test('Sum of negative numbers', () => {
+                    // Test logic
+                  })
+
+                })
+
+                describe('Multiply function tests', () => {
+
+                  test('Multiply of positive numbers', () => {
+                    // Test logic
+                  })
+
+                  test('Multiply of negative numbers', () => {
+                    // Test logic
+                  })
+
+                })
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we have a top-level describe block named 'Math functions'
+          which contains two nested describe blocks for sum and multiply
+          functions respectively. This creates a clear hierarchy and structure
+          for the tests.
+        </li>
+        <li>
+          it() block: It is an alias for the test() function in Jest. Both it()
+          and test() can be used interchangeably to define test cases. The
+          choice between using it() or test() is mostly a matter of personal
+          preference or team conventions. Some developers prefer it() as it
+          reads more like natural language, making the test cases more
+          descriptive. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              it('should calculate sum of two numbers', () => {
+                // Test logic
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we are using it() to define a test case that checks the sum of
+          two numbers. The functionality is the same as using test().
         </li>
       </ul>
     </>
