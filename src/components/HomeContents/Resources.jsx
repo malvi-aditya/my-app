@@ -1,15 +1,15 @@
-import { styled } from "@mui/material/styles";
+import { styled } from '@mui/material/styles'
 
-const Content = styled("div")(() => ({
-  paddingTop: "8px",
-}));
+const Content = styled('div')(() => ({
+  paddingTop: '8px'
+}))
 
-const GridContainer = styled("div")(() => ({
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-}));
+const GridContainer = styled('div')(() => ({
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr'
+}))
 
-export default function Resources() {
+export default function Resources () {
   return (
     <>
       <h4> Do these topics! </h4>
@@ -31,9 +31,9 @@ export default function Resources() {
           </p>
           <a
             href={
-              "https://www.youtube.com/watch?v=Tnp3yX9Z93Q&ab_channel=SemicolonGuy"
+              'https://www.youtube.com/watch?v=Tnp3yX9Z93Q&ab_channel=SemicolonGuy'
             }
-            target="_blank"
+            target='_blank'
           >
             CRP:
             https://www.youtube.com/watch?v=Tnp3yX9Z93Q&ab_channel=SemicolonGuy
@@ -41,48 +41,56 @@ export default function Resources() {
           <br />
           <a
             href={
-              "https://stackoverflow.com/questions/56885037/react-batch-updates-for-multiple-setstate-calls-inside-useeffect-hook"
+              'https://stackoverflow.com/questions/56885037/react-batch-updates-for-multiple-setstate-calls-inside-useeffect-hook'
             }
-            target="_blank"
+            target='_blank'
           >
             https://stackoverflow.com/questions/56885037/react-batch-updates-for-multiple-setstate-calls-inside-useeffect-hook
           </a>
           <br />
-          <a href={"https://javascript.info/ninja-code"} target="_blank">
+          <a href={'https://javascript.info/ninja-code'} target='_blank'>
             https://javascript.info/ninja-code
           </a>
           <br />
           <a
             href={
-              "https://www.youtube.com/playlist?list=PL55RiY5tL51rcCnrOrZixuOsZhAHHy6os"
+              'https://www.youtube.com/playlist?list=PL55RiY5tL51rcCnrOrZixuOsZhAHHy6os'
             }
-            target="_blank"
+            target='_blank'
           >
             Webpack Basics: https://javascript.info/ninja-code
           </a>
           <br />
-          <a href={"https://google.github.io/styleguide/"} target="_blank">
+          <a href={'https://google.github.io/styleguide/'} target='_blank'>
             https://google.github.io/styleguide/
           </a>
           <br />
         </Content>
         <Content>
           <p>
-            {" "}
+            {' '}
             React Routers working etc. , Virtual DOM, Event Listeners
-            everything, Polyfills (setTimeout etc.){" "}
+            everything, Polyfills (setTimeout etc.){' '}
           </p>
           <p> Design architecture of ui, apis and the flow of everything. </p>
           <p>
-            {" "}
-            Performance Improvement techniques, freezing or slow ui issues etc.{" "}
+            {' '}
+            Performance Improvement techniques, freezing or slow ui issues etc.{' '}
           </p>
           <p>
             Event Delegation, react suspense, react.memo, render props, HOCs,
-            performance optimization in virtual DOM, React.lazy, lazy Loading{" "}
+            performance optimization in virtual DOM, React.lazy, lazy Loading{' '}
+          </p>
+          <p>
+            Infinite Scrolling/Interception Observer API, If Event loop does not
+            exists how JS execution might work
+          </p>
+          <p>
+            In general System design (ex: Photo upload, fetch photo with sizes
+            in url: https://picsum.photos/200/300)
           </p>
         </Content>
       </GridContainer>
     </>
-  );
+  )
 }
