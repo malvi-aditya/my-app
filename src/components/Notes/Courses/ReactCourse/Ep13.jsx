@@ -434,7 +434,7 @@ function Ep13 () {
               import { MemoryRouter } from 'react-router-dom'
               import MyComponent from '../MyComponent'
 
-              test('renders MyComponent with Router', () => {
+              it('renders MyComponent with Router', () => {
                 render(
                   <MemoryRouter>
                     <MyComponent />
@@ -457,7 +457,7 @@ function Ep13 () {
               import { render, screen, fireEvent } from '@testing-library/react'
               import MyComponent from '../MyComponent'
 
-              test('calls function on button click', () => {
+              it('calls function on button click', () => {
                 const mockFunction = jest.fn()
 
                 render(<MyComponent onClick={mockFunction} />)
@@ -482,7 +482,7 @@ function Ep13 () {
               import { render, screen } from '@testing-library/react'
               import MyComponent from '../MyComponent'
 
-              test('renders MyComponent with props', () => {
+              it('renders MyComponent with props', () => {
                 const props = {
                   title: 'Test Title',
                   description: 'Test Description'
@@ -504,6 +504,279 @@ function Ep13 () {
           → Here, we define the props object with the required props and pass it
           to MyComponent during rendering. We then assert that the elements with
           the provided prop values are present in the document.
+        </li>
+        <li>
+          Handling fetch (API calls) in test cases:
+          <br />→ Fetch etc, are browser APIs and not core JS, jsdom does not
+          has this all APIs, its just a simulation env. We can mock the fetch
+          function using jest.fn() to simulate API responses. This allows us to
+          test components that make API calls without actually hitting the
+          network. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen, waitFor } from '@testing-library/react'
+              import MyComponent from '../MyComponent'
+
+              // global is the global object in Node.js/jsdom environment
+              // replace that fetch with a mock function
+              beforeEach(() => {
+                global.fetch = jest.fn(() => {
+                    return Promise.resolve({
+                      json: () => Promise.resolve({ data: 'Mocked Data' })
+                    })
+                  } 
+                )
+              })
+              // Mocking fetch, it returns a promise which resolves to an object with a json method
+              // json method also returns a promise which resolves to the mocked data
+
+              afterEach(() => {
+                jest.resetAllMocks()
+              })
+
+              it('fetches and displays data', async () => {
+                render(<MyComponent />)
+
+                const dataElement = await waitFor(() =>
+                  screen.getByText(/Mocked Data/i)
+                )
+
+                expect(dataElement).toBeInTheDocument()
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we mock the global fetch function to return a resolved promise
+          with mocked data. In the test case, we render MyComponent and wait for
+          the data to be displayed using waitFor. Finally, we assert that the
+          mocked data is present in the document. We cannot make actual API
+          calls in test cases as it is not a browser environment and also it
+          will make our tests flaky and dependent on network conditions.
+        </li>
+        <li>
+          jest --watch: It is a command-line option that allows us to run Jest
+          in watch mode. In this mode, Jest will watch for file changes and
+          automatically re-run the relevant tests whenever a file is modified.
+          This is useful during development as it provides instant feedback on
+          code changes without having to manually run the tests each time.
+          <br />
+          To use jest --watch, we can run the following command in the terminal:
+          <br />
+          <code>npx jest --watch</code>
+          <br />
+          This will start Jest in watch mode and display a list of options to
+          filter and run specific tests. We can choose to run all tests, only
+          failed tests, or tests related to changed files.
+          <br />
+          We can add a script in package.json:
+          <br />
+          <code>"test:watch": "jest --watch"</code>
+          <br />
+          And run it using:
+          <br />
+          <code>npm run test:watch</code>
+          <br />
+          The above is similar to HMR (Hot Module Replacement) in development
+          servers, where code changes are reflected instantly without a full
+          reload.
+        </li>
+        <li>
+          Integration Testing:
+          <br />→ We can test the interaction between multiple components by
+          rendering them together in a test case. This allows us to verify that
+          the components work correctly when used together. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen, fireEvent } from '@testing-library/react'
+              import ParentComponent from '../ParentComponent'
+
+              it('tests interaction between Parent and Child components', () => {
+                render(<ParentComponent />)
+
+                const button = screen.getByRole('button', { name: /Update Child/i })
+                fireEvent.click(button)
+
+                const childElement = screen.getByText(/Child Updated/i)
+                expect(childElement).toBeInTheDocument()
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we render ParentComponent which contains ChildComponent. We
+          simulate a click event on a button in the parent component that
+          updates the state and affects the child component. We then assert that
+          the child component reflects the updated state correctly.
+        </li>
+        <li>
+          act function: It is a utility provided by React Testing Library to
+          ensure that all state updates related to a component are processed
+          before making assertions. It helps in avoiding warnings related to
+          state updates not being wrapped in act(). If our component has states
+          being updated, after API call etc. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen, fireEvent, act } from '@testing-library/react'
+              import MyComponent from '../MyComponent'
+
+              it('updates state on button click', () => {
+                render(<MyComponent />)
+
+                const button = screen.getByRole('button', { name: /Increment/i })
+
+                act(() => {
+                  fireEvent.click(button)
+                })
+
+                const countElement = screen.getByText(/Count: 1/i)
+                expect(countElement).toBeInTheDocument()
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we wrap the fireEvent.click call inside act() to ensure that
+          all state updates triggered by the click event are processed before we
+          make assertions on the updated state.
+          <br />→ In most cases, React Testing Library automatically wraps
+          events in act(), so we may not need to use it explicitly. But in some
+          cases where state updates are asynchronous or involve multiple steps,
+          using act() can help ensure that our tests behave as expected. Example
+          of component, having an API call, being rendered asynchronously. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen, waitFor } from '@testing-library/react'
+              import MyComponent from '../MyComponent'
+
+              it('renders data after API call', async () => {
+                 await act(async () => {
+                    render(<MyComponent />)
+                 })
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we wrap the render call inside an async act() to ensure that
+          all state updates triggered by the API call are processed before we
+          make assertions on the rendered data.
+        </li>
+        <li>
+          If we have an input field in our component and we want to test user
+          typing into it, we can use fireEvent.change to simulate the change
+          event. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen, fireEvent } from '@testing-library/react'
+              import MyComponent from '../MyComponent'
+
+              it('updates input value on user typing', () => {
+                render(<MyComponent />)
+
+                const inputElement = screen.getByRole('textbox', { name: /Username/i })
+
+                // Simulate user typing, event object with target value
+                fireEvent.change(inputElement, { target: { value: 'testuser' } })
+
+                expect(inputElement.value).toBe('testuser')
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we simulate a change event on the input field by providing a
+          new value in the event object. We then assert that the input field's
+          value has been updated correctly.
+        </li>
+        <li>
+          getByTestId: It is a query method provided by React Testing Library to
+          select elements based on their data-testid attribute. This is useful
+          when there are no suitable roles or text content to query the element.
+          Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              // In the component
+              <input data-testid="custom-element" onChange={} />
+
+              // In the test case
+              const customElement = screen.getByTestId('custom-element')
+              expect(customElement).toBeInTheDocument()
+
+              // If we want all elements with the same test id
+              const customElements = screen.getAllByTestId('custom-element')
+              expect(customElements.length).toBe(3) // Assuming there are 3 such elements
+            `}
+          </SyntaxHighlighter>
+          → Here, we have a input element in the component, with a data-testid
+          attribute set to "custom-element". In the test case, we use
+          getByTestId to select the element and assert that it is present in the
+          document.
+        </li>
+        <li>
+          beforeAll, beforeEach, afterAll, afterEach:
+          <br />→ beforeAll: This function is executed once before all the test
+          cases in a test suite. It is used to set up any global configurations
+          or perform actions that need to be done only once before running the
+          tests. Test suite is defined as a describe block. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              beforeAll(() => {
+                // Setup code here
+              })
+            `}
+          </SyntaxHighlighter>
+          → beforeEach: This function is executed before each individual test
+          case in a test suite. It is used to set up any preconditions or reset
+          states before each test runs. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              beforeEach(() => {
+                // Setup code here
+              })
+            `}
+          </SyntaxHighlighter>
+          → afterEach: This function is executed after each individual test case
+          in a test suite. It is used to clean up or reset states after each
+          test runs. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              afterEach(() => {
+                // Cleanup code here
+              })
+            `}
+          </SyntaxHighlighter>
+          → afterAll: This function is executed once after all the test cases in
+          a test suite have run. It is used to perform any final cleanup or
+          teardown actions that need to be done only once after all tests have
+          completed. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              afterAll(() => {
+                // Teardown code here
+              })
+            `}
+          </SyntaxHighlighter>
+        </li>
+        <li>
+          We can also render multiple components together in a test case to test
+          their interaction. Ex:
+          <SyntaxHighlighter language='javascript'>
+            {`
+              import { render, screen, fireEvent } from '@testing-library/react'
+              import ComponentA from '../ComponentA'
+              import ComponentB from '../ComponentB'
+
+              it('tests interaction between ComponentA and ComponentB', () => {
+                render(
+                  <>
+                    <ComponentA />
+                    <ComponentB />
+                  </>
+                )
+
+                const buttonA = screen.getByRole('button', { name: /Action A/i })
+                fireEvent.click(buttonA)
+
+                const resultB = screen.getByText(/Result from B/i)
+                expect(resultB).toBeInTheDocument()
+              })
+            `}
+          </SyntaxHighlighter>
+          → Here, we render both ComponentA and ComponentB together. We simulate
+          an action in ComponentA that affects ComponentB and then assert that
+          the expected result is present in ComponentB. This allows us to test
+          the interaction between the two components.
         </li>
       </ul>
     </>
