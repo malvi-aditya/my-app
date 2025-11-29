@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import Experiments from '../components/Experiments/Experiments'
 import Playground from '../components/Playground/Playground'
 import Notes from '../components/Notes/Notes'
+import FrontendDesign from '../components/FrontendDesign/FrontendDesign'
 // import ImageCaption from "../components/ImageComponents/ImageCaption";
 
 export default function AppRoutes () {
@@ -13,6 +14,7 @@ export default function AppRoutes () {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/notes' element={<Notes />} />
+        <Route path='/design' element={<FrontendDesign />} />
         <Route path='/experiments' element={<Experiments />} />
         <Route path='/playground' element={<Playground />} />
         {/* <Route path="/model" element={<ImageCaption />} /> */}
