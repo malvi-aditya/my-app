@@ -1,5 +1,6 @@
 import ComponentDesign from './ComponentDesign'
 import ConfigDrivenUI from './ConfigDrivenUI'
+import InfiniteScroll from './InfiniteScroll'
 import ShimmerUI from './ShimmerUI'
 
 function LLD () {
@@ -8,6 +9,7 @@ function LLD () {
       <ComponentDesign />
       <ConfigDrivenUI />
       <ShimmerUI />
+      <InfiniteScroll />
     </div>
   )
 }
