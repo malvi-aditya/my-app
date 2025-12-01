@@ -1,3 +1,4 @@
+import Accordion from './Accordion'
 import ComponentDesign from './ComponentDesign'
 import ConfigDrivenUI from './ConfigDrivenUI'
 import InfiniteScroll from './InfiniteScroll'
@@ -10,6 +11,7 @@ function LLD () {
       <ConfigDrivenUI />
       <ShimmerUI />
       <InfiniteScroll />
+      <Accordion />
     </div>
   )
 }
