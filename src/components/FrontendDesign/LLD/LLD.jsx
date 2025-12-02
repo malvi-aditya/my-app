@@ -4,6 +4,7 @@ import ConfigDrivenUI from './ConfigDrivenUI'
 import InfiniteScroll from './InfiniteScroll'
 import NestedComments from './NestedComments'
 import ShimmerUI from './ShimmerUI'
+import StateManagement from './StateManagement'
 
 function LLD () {
   return (
@@ -14,6 +15,7 @@ function LLD () {
       <InfiniteScroll />
       <Accordion />
       <NestedComments />
+      <StateManagement />
     </div>
   )
 }
