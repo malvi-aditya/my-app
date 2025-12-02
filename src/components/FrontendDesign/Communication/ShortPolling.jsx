@@ -12,10 +12,10 @@ const ShortPolling = () => {
           repeatedly sends requests to a server at regular, fixed intervals to
           check for updates. The server responds to each request immediately,
           even if there is no new data.
-          <br />- It is a <b>short lived</b> connection, make a request → get
-          response, no matter if there is an update or not. Does not hold the
-          server for long time. (Also can be said, no <b>persistent </b>{' '}
-          connection, it is not a long term connection).
+          <br />- It is a <b>short lived</b> connection, make a request →
+          immediately get response, no matter if there is an update or not. Does
+          not hold the server for long time. (Also can be said, no{' '}
+          <b>persistent </b> connection, it is not a long term connection).
           <br />
           - Less resource utilization, as short term, long connections usually
           utilize more resources.
