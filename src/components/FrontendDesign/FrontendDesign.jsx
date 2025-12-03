@@ -6,11 +6,13 @@ import Box from '@mui/material/Box'
 import LLD from './LLD/LLD'
 import HLD from './HLD/HLD.jsx'
 import Communication from './Communication/Communication.jsx'
+import Performance from './Performance/Performance.jsx'
 
 const tabConfig = [
   { id: 0, name: 'LLD' },
   { id: 1, name: 'HLD' },
-  { id: 2, name: 'Communication' }
+  { id: 2, name: 'Communication' },
+  { id: 3, name: 'Performance' }
 ]
 
 const Root = styled('div')(() => ({
@@ -56,7 +58,15 @@ export default function FrontendDesign () {
         </Tabs>
       </Box>
       <TabContainer ref={tabContentRef}>
-        {tab === 0 ? <LLD /> : tab === 1 ? <HLD /> : <Communication />}
+        {tab === 0 ? (
+          <LLD />
+        ) : tab === 1 ? (
+          <HLD />
+        ) : tab === 2 ? (
+          <Communication />
+        ) : (
+          <Performance />
+        )}
       </TabContainer>
     </Root>
   )
