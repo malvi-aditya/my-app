@@ -1,5 +1,6 @@
 import PerformanceImportance from './PerformanceImportance'
 import PerformanceMonitoring from './PerformanceMonitoring'
+import PerformanceTools from './PerformanceTools'
 
 const Performance = () => {
   return (
@@ -26,6 +27,7 @@ const Performance = () => {
       </ul>
       <PerformanceImportance />
       <PerformanceMonitoring />
+      <PerformanceTools />
     </>
   )
 }
