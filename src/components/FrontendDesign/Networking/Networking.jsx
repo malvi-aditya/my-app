@@ -1,3 +1,4 @@
+import NetworkProtocols from './NetworkProtocols'
 import WebWorking from './WebWorking'
 
 export default function Networking () {
@@ -16,6 +17,7 @@ export default function Networking () {
         </li>
       </ul>
       <WebWorking />
+      <NetworkProtocols />
     </>
   )
 }
