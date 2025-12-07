@@ -7,12 +7,14 @@ import LLD from './LLD/LLD'
 import HLD from './HLD/HLD.jsx'
 import Communication from './Communication/Communication.jsx'
 import Performance from './Performance/Performance.jsx'
+import Networking from './Networking/Networking.jsx'
 
 const tabConfig = [
   { id: 0, name: 'LLD' },
   { id: 1, name: 'HLD' },
   { id: 2, name: 'Communication' },
-  { id: 3, name: 'Performance' }
+  { id: 3, name: 'Performance' },
+  { id: 4, name: 'Networking' }
 ]
 
 const Root = styled('div')(() => ({
@@ -64,8 +66,10 @@ export default function FrontendDesign () {
           <HLD />
         ) : tab === 2 ? (
           <Communication />
-        ) : (
+        ) : tab === 3 ? (
           <Performance />
+        ) : (
+          <Networking />
         )}
       </TabContainer>
     </Root>
