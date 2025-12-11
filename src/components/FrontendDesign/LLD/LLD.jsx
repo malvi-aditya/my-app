@@ -3,6 +3,7 @@ import ComponentDesign from './ComponentDesign'
 import ConfigDrivenUI from './ConfigDrivenUI'
 import InfiniteScroll from './InfiniteScroll'
 import NestedComments from './NestedComments'
+import RealTimeUpdates from './RealTimeUpdates'
 import ShimmerUI from './ShimmerUI'
 import StateManagement from './StateManagement'
 
@@ -16,6 +17,7 @@ function LLD () {
       <Accordion />
       <NestedComments />
       <StateManagement />
+      <RealTimeUpdates />
     </div>
   )
 }
