@@ -1,7 +1,7 @@
 const InterviewNotes = () => {
   return (
     <div>
-      <h6>Resume and Interviews</h6>
+      <h5>Resume and Interviews</h5>
       <ul>
         <li>
           Resume:
@@ -74,25 +74,26 @@ const InterviewNotes = () => {
         </li>
         <li>
           Salary negotiation:
-          <br />→ Prepare for it, HR is ready to hire you for less salary we
-          should negotiate it well. There is always a scope for increment when
-          we get the first offer letter, it is up to us to get that increment by
+          <br />
+          → Prepare for it, HR is ready to hire you for less salary we should
+          negotiate it well. There is always a scope for increment when we get
+          the first offer letter, it is up to us to get that increment by
           negotiating. First offer is generally at the lower end of the range of
           the budget. Tell your expectation, if it is out of their range then
-          ask for their range. It is not unprofessional to negotiate your
-          salary, ask what you deserve and max 30% increment is not true. Don't
-          fall into those traps where HR says you will be promoted soon or you
-          will get a big raise soon. ESOPS should be ignored focus on base
-          salary, only listed companies stocks can be traded. Be confident,
-          don't say industry standard etc, just say I want this amount. Never
-          look for a percentage hike, go for a fixed number.
+          ask for their range.
+          <br />→ It is not unprofessional to negotiate your salary, ask what
+          you deserve and max 30% increment is not true. Don't fall into those
+          traps where HR says you will be promoted soon or you will get a big
+          raise soon. ESOPS should be ignored focus on base salary, only listed
+          companies stocks can be traded. Be confident, don't say industry
+          standard etc, just say I want this amount. Never look for a percentage
+          hike, go for a fixed number.
         </li>
       </ul>
-      <h6>Personal Branding:</h6>
-      <h6>LinkedIn masterclass:</h6>
+      <h5>Linkedin Masterclass:</h5>
       <ul>
         <li>
-          → Have a good profile picture as it matters a lot, a good and unique
+          Have a good profile picture as it matters a lot, a good and unique
           bio, start a post with catchy line something on reading will make
           reader want to read more. Be active (like, comment post) and not dead,
           otherwise linkedin algo wont help you, like if you just read and

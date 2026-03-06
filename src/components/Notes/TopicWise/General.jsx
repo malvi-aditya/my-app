@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles'
 import GitNotes from './GitNotes'
 import InterviewNotes from './InterviewNotes'
+import SalaryNegotiation from './SalaryNegotiation'
 
 const Content = styled('div')(() => ({
   margin: '16px 16px 16px 0px',
@@ -51,6 +52,7 @@ export const General = () => {
       to make web secure. To fix this using browser extensions is not a good
       practice, we should handle it from our server.
       <InterviewNotes />
+      <SalaryNegotiation />
     </Content>
   )
 }
