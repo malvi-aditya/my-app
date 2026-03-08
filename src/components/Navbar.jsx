@@ -9,6 +9,9 @@ export default function Navbar () {
       <Link className='navbar-brand' to='/notes'>
         Notes
       </Link>
+      <Link className='navbar-brand' to='/design'>
+        Frontend Design
+      </Link>
       <Link className='navbar-brand' to='/experiments'>
         Experiments
       </Link>

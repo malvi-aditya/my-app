@@ -1,7 +1,7 @@
 export default function GitNotes () {
   return (
     <div>
-      <h6>Git:</h6>
+      <h5>Git:</h5>
       Commands:
       <br />
       git branch -M 'main'-- If on master branch, it will rename to main.
